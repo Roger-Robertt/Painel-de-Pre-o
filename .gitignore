@@ -1,0 +1,18 @@
+# Next.js / Node
+node_modules/
+.next/
+out/
+build/
+.env*.local
+
+# Go
+bin/
+main
+*.exe
+*.test
+/vendor/
+
+# IDEs e Sistema
+.vscode/
+.DS_Store
+Thumbs.db
