@@ -31,10 +31,12 @@ export default function CadastroPreco() {
 
         const novoRegistro = {
             produto_id: Number(produtoId),
-            fornecedor: fornecedor,
+            fornecedor: String(fornecedor),
             preco: parseFloat(preco),
-            data: data, 
+            data: data ? new Date(data).toISOString() : new Date().toISOString(),
         };
+
+        console.log("Enviando para o Go:", novoRegistro);
 
         try {
             const response = await fetch('http://127.0.0.1:3001/registros-preco', {
@@ -50,6 +52,8 @@ export default function CadastroPreco() {
                 setData('');
                 setProdutoId('');
             } else {
+                const errorData = await response.json();
+                console.error("Erro da API:", errorData);
                 setStatus({ type: 'error', message: 'Erro ao cadastrar o preço no banco.' });
             }
         } catch (error) {
@@ -76,7 +80,7 @@ export default function CadastroPreco() {
                 )}
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    {/* Seletor de Produto */}
+
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Selecione o Produto</label>
                         <select
@@ -105,7 +109,7 @@ export default function CadastroPreco() {
                             required
                         />
                     </div>
-                   
+
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Preço por Litro (R$)</label>
                         <input
@@ -118,7 +122,7 @@ export default function CadastroPreco() {
                             required
                         />
                     </div>
-                    
+
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Data do Registro</label>
                         <input
@@ -129,7 +133,7 @@ export default function CadastroPreco() {
                             required
                         />
                     </div>
-                   
+
                     <button
                         type="submit"
                         className="mt-4 p-3 bg-blue-600 hover:bg-blue-700 rounded font-bold transition-colors duration-200"

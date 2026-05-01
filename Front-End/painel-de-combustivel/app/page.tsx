@@ -31,28 +31,42 @@ export default function Dashboard() {
   const [produtoSelecionado, setProdutoSelecionado] = useState<number | "">("");
 
   useEffect(() => {
+
     Promise.all([
-      fetch("http://localhost:3001/produtos").then((res) => res.json()),
-      fetch("http://localhost:3001/registros-preco").then((res) => res.json()),
+      fetch("http://127.0.0.1:3001/produtos").then(res => res.json()).catch(() => []),
+      fetch("http://127.0.0.1:3001/registros-preco").then(res => res.json()).catch(() => [])
     ])
       .then(([dadosProdutos, dadosRegistros]) => {
-        setProdutos(dadosProdutos);
-        setRegistros(dadosRegistros);
-        if (dadosProdutos.length > 0) {
-          setProdutoSelecionado(dadosProdutos[0].id);
+
+        if (Array.isArray(dadosProdutos)) {
+          setProdutos(dadosProdutos);
+          if (dadosProdutos.length > 0) {
+            setProdutoSelecionado(dadosProdutos[0].id);
+          }
+        }
+
+        if (Array.isArray(dadosRegistros)) {
+          setRegistros(dadosRegistros);
+        } else {
+          setRegistros([]);
         }
       })
-      .catch((err) => console.error("Erro ao carregar dados:", err));
+      .catch((err) => {
+        console.error("Erro ao carregar dados:", err);
+        setProdutos([]);
+        setRegistros([]);
+      });
   }, []);
 
-  const dadosGrafico = registros
-    .filter((reg) => reg.produto_id === Number(produtoSelecionado))
-    .map((reg) => ({
-      data: new Date(reg.data).toLocaleDateString("pt-BR"),
-      preco: reg.preco,
-    }))
-
-    .sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+  const dadosGrafico = Array.isArray(registros)
+    ? registros
+      .filter((reg) => reg && reg.produto_id === Number(produtoSelecionado))
+      .map((reg) => ({
+        data: reg.data ? new Date(reg.data).toLocaleDateString("pt-BR") : "",
+        preco: reg.preco || 0,
+      }))
+      .sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime())
+    : [];
 
   return (
 
