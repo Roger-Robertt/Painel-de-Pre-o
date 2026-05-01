@@ -48,9 +48,5 @@ func (rpc *RegistroPrecoController) CreateRegistroPreco(ctx fiber.Ctx) error {
 		})
 	}
 
-	if err := database.DB.Create(&registro).Error; err != nil {
-		return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao salvar no banco"})
-	}
-
 	return ctx.Status(201).JSON(registro)
 }
