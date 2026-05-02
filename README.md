@@ -1,3 +1,6 @@
+
+<img src="C:\Users\ROGER ASTRA\OneDrive\Imagens\Screenshots\Captura de tela 2026-05-02 014604.png" alt="Texto Alternativo" width="600px">
+
 # 📊 Painel de Preços de Combustíveis
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
