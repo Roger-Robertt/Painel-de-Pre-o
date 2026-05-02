@@ -11,7 +11,7 @@ var DB *gorm.DB
 
 func ConectarBanco() {
 
-	dsn := "host=127.0.0.1 user=roger_user password=1234 dbname=Produtos port=5433 sslmode=disable"
+	dsn := "host=127.0.0.1 user=postgres password=1234 dbname=Produtos port=5433 sslmode=disable"
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
