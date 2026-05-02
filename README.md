@@ -1,5 +1,5 @@
 
-<img src="C:\Users\ROGER ASTRA\OneDrive\Imagens\Screenshots\Captura de tela 2026-05-02 014604.png" alt="Texto Alternativo" width="600px">
+<img src="C:\Users\ROGER ASTRA\OneDrive\Imagens\Screenshots\Captura de tela 2026-05-02 014604.png" alt="Texto Alternativo" width="100%">
 
 # 📊 Painel de Preços de Combustíveis
 
