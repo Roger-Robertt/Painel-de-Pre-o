@@ -1,18 +1,21 @@
-package Controller
+package controller
 
 import (
-	database "painel-de-preco/back-end/dataBase"
+	model "painel-de-preco/back-end/model"
 
-	model "painel-de-preco/back-end/Model"
+	"gorm.io/gorm"
 
 	"github.com/gofiber/fiber/v3"
 )
 
 type FornecedorController struct {
+	DB *gorm.DB
 }
 
-func NewFornecedorController() *FornecedorController {
-	return &FornecedorController{}
+func NewFornecedorController(DB *gorm.DB) *FornecedorController {
+	return &FornecedorController{
+		DB: DB,
+	}
 }
 
 // GET /fornecedores
@@ -20,7 +23,7 @@ func (fc *FornecedorController) GetAllFornecedores(ctx fiber.Ctx) error {
 
 	var fornecedores []model.Fornecedor
 
-	result := database.DB.Find(&fornecedores)
+	result := fc.DB.Find(&fornecedores)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
@@ -41,7 +44,7 @@ func (fc *FornecedorController) CreateFornecedor(ctx fiber.Ctx) error {
 		})
 	}
 
-	result := database.DB.Create(&fornecedor)
+	result := fc.DB.Create(&fornecedor)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{

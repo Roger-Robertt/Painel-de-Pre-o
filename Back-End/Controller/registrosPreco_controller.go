@@ -1,17 +1,21 @@
-package Controller
+package controller
 
 import (
-	model "painel-de-preco/back-end/Model"
-	database "painel-de-preco/back-end/dataBase"
+	model "painel-de-preco/back-end/model"
+
+	"gorm.io/gorm"
 
 	"github.com/gofiber/fiber/v3"
 )
 
 type RegistroPrecoController struct {
+	DB *gorm.DB
 }
 
-func NewRegistroPrecoController() *RegistroPrecoController {
-	return &RegistroPrecoController{}
+func NewRegistroPrecoController(DB *gorm.DB) *RegistroPrecoController {
+	return &RegistroPrecoController{
+		DB: DB,
+	}
 }
 
 // GET /registros-preco
@@ -19,12 +23,16 @@ func (rpc *RegistroPrecoController) GetAllRegistrosPreco(ctx fiber.Ctx) error {
 
 	var registros []model.RegistroPreco
 
-	result := database.DB.Find(&registros)
+	result := rpc.DB.Find(&registros)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
 			"error": "Erro ao buscar registros de preço no Banco de Dados",
 		})
+	}
+
+	if err := rpc.DB.Preload("Fornecedor").Preload("Produto").Find(&registros).Error; err != nil {
+		return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao buscar registros"})
 	}
 
 	return ctx.JSON(registros)
@@ -40,7 +48,7 @@ func (rpc *RegistroPrecoController) CreateRegistroPreco(ctx fiber.Ctx) error {
 		})
 	}
 
-	result := database.DB.Create(&registro)
+	result := rpc.DB.Create(&registro)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{

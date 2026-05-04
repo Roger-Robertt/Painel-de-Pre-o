@@ -18,7 +18,7 @@ export default function RootLayout({
         <div className="flex min-h-screen">
 
           <aside className="w-64 border-r border-zinc-800 p-6 flex flex-col gap-8">
-            <h2 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="text-xl font-bold bg-blue-600 from-blue-500 to-cyan-400 bg-clip-text text-transparent">
               Market Panel
             </h2>
 

@@ -1,17 +1,20 @@
-package Controller
+package controller
 
 import (
-	model "painel-de-preco/back-end/Model"
-	database "painel-de-preco/back-end/dataBase"
+	model "painel-de-preco/back-end/model"
 
 	"github.com/gofiber/fiber/v3"
+	"gorm.io/gorm"
 )
 
 type ProdutoController struct {
+	DB *gorm.DB
 }
 
-func NewProdutoController() *ProdutoController {
-	return &ProdutoController{}
+func NewProdutoController(DB *gorm.DB) *ProdutoController {
+	return &ProdutoController{
+		DB: DB,
+	}
 }
 
 // GET /produtos
@@ -19,7 +22,7 @@ func (pc *ProdutoController) GetAllProdutos(ctx fiber.Ctx) error {
 
 	var produtos []model.Produto
 
-	result := database.DB.Find(&produtos)
+	result := pc.DB.Find(&produtos)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
@@ -40,7 +43,7 @@ func (pc *ProdutoController) CreateProduto(ctx fiber.Ctx) error {
 		})
 	}
 
-	result := database.DB.Create(&produto)
+	result := pc.DB.Create(&produto)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{

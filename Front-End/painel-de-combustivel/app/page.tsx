@@ -17,12 +17,20 @@ interface Produto {
   nome: string;
 }
 
+export interface Fornecedor {
+  id: number;
+  nome: string;
+  cnpj: string;
+}
+
 interface RegistroPreco {
   id: number;
   produto_id: number;
   fornecedor_id: number;
   preco: number;
   data: string;
+
+  fornecedor?: Fornecedor;
 }
 
 export default function Dashboard() {
@@ -97,7 +105,7 @@ export default function Dashboard() {
           </select>
         </div>
 
-        <div className="w-full h-[350px] bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+        <div className="w-full h-87.5 bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4">Variação de Preço ao Longo do Tempo</h2>
           {dadosGrafico.length > 0 ? (
 

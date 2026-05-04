@@ -45,7 +45,7 @@ export default function CadastroProduto() {
             } else {
                 setStatus({ type: 'error', message: 'Erro ao cadastrar o produto.' });
             }
-            
+
         } catch (error) {
             setStatus({ type: 'error', message: 'Erro de conexão com o servidor.' });
         }

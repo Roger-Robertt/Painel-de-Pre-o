@@ -3,9 +3,8 @@ package main
 import (
 	"log"
 
-	database "painel-de-preco/back-end/dataBase"
-
-	"painel-de-preco/back-end/Controller"
+	controller "painel-de-preco/back-end/controller"
+	database "painel-de-preco/back-end/database"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
@@ -18,11 +17,11 @@ func main() {
 
 	database.ConectarBanco()
 
-	ProdutoController := Controller.NewProdutoController()
+	ProdutoController := controller.NewProdutoController(database.DB)
 
-	FornecedorController := Controller.NewFornecedorController()
+	FornecedorController := controller.NewFornecedorController(database.DB)
 
-	RegistrosController := Controller.NewRegistroPrecoController()
+	RegistrosController := controller.NewRegistroPrecoController(database.DB)
 
 	// Rotas para Produtos, Fornecedores e Registros de Preço (GET)
 	app.Get("/produtos", ProdutoController.GetAllProdutos)
