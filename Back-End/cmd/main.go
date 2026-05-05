@@ -28,14 +28,14 @@ func main() {
 
 	app.Get("/fornecedores", FornecedorController.GetAllFornecedores)
 
-	app.Get("/registros-preco", RegistrosController.GetAllRegistrosPreco)
+	app.Get("/registro_precos", RegistrosController.GetAllRegistrosPreco)
 
 	// POST para criar um novo produto
 	app.Post("/produtos", ProdutoController.CreateProduto)
 
 	app.Post("/fornecedores", FornecedorController.CreateFornecedor)
 
-	app.Post("/registros-preco", RegistrosController.CreateRegistroPreco)
+	app.Post("/registro_precos", RegistrosController.CreateRegistroPreco)
 
 	log.Fatal(app.Listen(":3001"))
 }

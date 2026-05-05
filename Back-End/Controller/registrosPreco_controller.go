@@ -18,41 +18,36 @@ func NewRegistroPrecoController(DB *gorm.DB) *RegistroPrecoController {
 	}
 }
 
-// GET /registros-preco
+// GET /registro_precos
 func (rpc *RegistroPrecoController) GetAllRegistrosPreco(ctx fiber.Ctx) error {
 
-	var registros []model.RegistroPreco
+	var registro []model.RegistroPreco
 
-	result := rpc.DB.Find(&registros)
+	err := rpc.DB.Find(&registro).Error
 
-	if result.Error != nil {
-		return ctx.Status(500).JSON(fiber.Map{
-			"error": "Erro ao buscar registros de preço no Banco de Dados",
-		})
-	}
-
-	if err := rpc.DB.Preload("Fornecedor").Preload("Produto").Find(&registros).Error; err != nil {
-		return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao buscar registros"})
-	}
-
-	return ctx.JSON(registros)
+    if err != nil {
+      return ctx.Status(500).JSON(fiber.Map{
+        "error": err.Error(), 
+    })
+    }
+	return ctx.JSON(registro)
 }
 
-// POST /registros-preco
+// POST /registro_precos
 func (rpc *RegistroPrecoController) CreateRegistroPreco(ctx fiber.Ctx) error {
 	var registro model.RegistroPreco
 
 	if err := ctx.Bind().JSON(&registro); err != nil {
-		return ctx.Status(400).JSON(fiber.Map{
-			"error": "Erro ao parsear o corpo da requisição",
-		})
+		return ctx.Status(500).JSON(fiber.Map{
+        "error": err.Error(), 
+    })
 	}
 
 	result := rpc.DB.Create(&registro)
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
-			"error": "Erro ao criar registro de preço no Banco de Dados",
+			"error": result.Error.Error(), 
 		})
 	}
 

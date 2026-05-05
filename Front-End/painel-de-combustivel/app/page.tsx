@@ -42,7 +42,7 @@ export default function Dashboard() {
 
     Promise.all([
       fetch("http://127.0.0.1:3001/produtos").then(res => res.json()).catch(() => []),
-      fetch("http://127.0.0.1:3001/registros-preco").then(res => res.json()).catch(() => [])
+      fetch("http://127.0.0.1:3001/registro_precos").then(res => res.json()).catch(() => [])
     ])
       .then(([dadosProdutos, dadosRegistros]) => {
 
@@ -70,10 +70,14 @@ export default function Dashboard() {
     ? registros
       .filter((reg) => reg && reg.produto_id === Number(produtoSelecionado))
       .map((reg) => ({
-        data: reg.data ? new Date(reg.data).toLocaleDateString("pt-BR") : "",
+        data: reg.data ? reg.data.split('-').reverse().join('/') : "",
         preco: reg.preco || 0,
       }))
-      .sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime())
+      .sort((a, b) => {
+        const dateA = new Date(a.data.split('/').reverse().join('-')).getTime();
+        const dateB = new Date(b.data.split('/').reverse().join('-')).getTime();
+        return dateA - dateB;
+      })
     : [];
 
   return (
@@ -109,7 +113,7 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold text-white mb-4">Variação de Preço ao Longo do Tempo</h2>
           {dadosGrafico.length > 0 ? (
 
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={300}>
 
               <LineChart data={dadosGrafico}>
 

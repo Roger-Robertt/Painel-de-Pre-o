@@ -11,7 +11,7 @@ interface Produto {
 export default function CadastroPreco() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtoId, setProdutoId] = useState('');
-    const [fornecedor, setFornecedor] = useState('');
+    const [fornecedorName, setFornecedorName] = useState('');
     const [preco, setPreco] = useState('');
     const [data, setData] = useState('');
     const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({
@@ -30,16 +30,16 @@ export default function CadastroPreco() {
         e.preventDefault();
 
         const novoRegistro = {
-            produto_id: Number(produtoId),
-            fornecedor: String(fornecedor),
-            preco: parseFloat(preco),
-            data: data ? new Date(data).toISOString() : new Date().toISOString(),
+            fornecedor_name: String(fornecedorName),
+            preco: parseFloat(preco) || 0,
+            produto_id: parseInt(produtoId) || 0,
+            data: data ? data : new Date().toLocaleDateString('en-CA')
         };
 
         console.log("Enviando para o Go:", novoRegistro);
 
         try {
-            const response = await fetch('http://127.0.0.1:3001/registros-preco', {
+            const response = await fetch('http://127.0.0.1:3001/registro_precos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoRegistro),
@@ -47,7 +47,8 @@ export default function CadastroPreco() {
 
             if (response.ok) {
                 setStatus({ type: 'success', message: 'Preço cadastrado com sucesso!' });
-                setFornecedor('');
+                setFornecedorName('');
+
                 setPreco('');
                 setData('');
                 setProdutoId('');
@@ -102,8 +103,8 @@ export default function CadastroPreco() {
                         <label className="text-sm text-zinc-400">Fornecedor / Posto</label>
                         <input
                             type="text"
-                            value={fornecedor}
-                            onChange={(e) => setFornecedor(e.target.value)}
+                            value={fornecedorName}
+                            onChange={(e) => setFornecedorName(e.target.value)}
                             className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500"
                             placeholder="Ex: Posto Ipiranga"
                             required

@@ -3,6 +3,7 @@ package database
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"painel-de-preco/back-end/model"
 )
 
 var DB *gorm.DB
@@ -16,7 +17,9 @@ func ConectarBanco() {
 		panic("Falha ao conectar no banco de dados!")
 	}
 
-	// database.AutoMigrate(&model.Produto{}, &model.RegistroPreco{})
+	// db.Migrator().DropTable(&model.RegistroPreco{})
+
+	db.AutoMigrate(&model.Produto{}, &model.Fornecedor{}, &model.RegistroPreco{})
 
 	DB = db
 
