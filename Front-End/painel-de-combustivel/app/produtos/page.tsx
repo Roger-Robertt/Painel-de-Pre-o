@@ -17,7 +17,7 @@ export default function CadastroProduto() {
     });
 
     const carregarProdutos = () => {
-        fetch('http://127.0.0.1:3001/produtos')
+        fetch('http://127.0.0.1:3001/api/v1/produtos')
             .then((res) => res.json())
             .then((data) => setProdutos(data))
             .catch(() => console.error('Erro ao carregar produtos'));
@@ -31,7 +31,7 @@ export default function CadastroProduto() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:3001/produtos', {
+            const response = await fetch('http://127.0.0.1:3001/api/v1/produtos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nome }),

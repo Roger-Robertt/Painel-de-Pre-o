@@ -26,7 +26,7 @@ export interface Fornecedor {
 interface RegistroPreco {
   id: number;
   produto_id: number;
-  fornecedor_id: number;
+  fornecedor_nome: string;
   preco: number;
   data: string;
 
@@ -41,8 +41,8 @@ export default function Dashboard() {
   useEffect(() => {
 
     Promise.all([
-      fetch("http://127.0.0.1:3001/produtos").then(res => res.json()).catch(() => []),
-      fetch("http://127.0.0.1:3001/registro_precos").then(res => res.json()).catch(() => [])
+      fetch("http://127.0.0.1:3001/api/v1/produtos").then(res => res.json()).catch(() => []),
+      fetch("http://127.0.0.1:3001/api/v1/registro_precos").then(res => res.json()).catch(() => [])
     ])
       .then(([dadosProdutos, dadosRegistros]) => {
 
@@ -162,7 +162,7 @@ export default function Dashboard() {
                   <tr key={reg.id} className="hover:bg-zinc-800/30 transition-colors">
                     <td className="p-4 text-white font-medium">
 
-                      {reg.fornecedor_id ? `Fornecedor ${reg.fornecedor_id}` : "Fornecedor Padrão"}
+                      {reg.fornecedor_nome ? `Fornecedor ${reg.fornecedor_nome}` : "Fornecedor Padrão"}
                     </td>
                     <td className="p-4 text-blue-400 font-semibold">
                       R$ {reg.preco.toFixed(2)}

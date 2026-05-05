@@ -3,7 +3,9 @@ package model
 type Fornecedor struct {
     ID   uint   `gorm:"primaryKey" json:"id"`
     Nome string `gorm:"not null" json:"nome"`
-    cnpj string `gorm:"not null" json:"cnpj"` // Novo campo pedido na imagem
+    CNPJ string `gorm:"not null" json:"cnpj"`
 }
 
-type Fornecedores []Fornecedor
+func (Fornecedor) TableName() string {
+    return "fornecedores"
+}

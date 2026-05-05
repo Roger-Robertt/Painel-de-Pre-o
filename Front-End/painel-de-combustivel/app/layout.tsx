@@ -24,7 +24,7 @@ export default function RootLayout({
 
             <nav className="flex flex-col gap-4">
 
-              <Link href="/" className="hover:text-blue-400 transition-colors">
+              <Link href="/dashboard" className="hover:text-blue-400 transition-colors">
                 Dashboard
               </Link>
 
@@ -34,6 +34,10 @@ export default function RootLayout({
 
               <Link href="/fornecedores" className="hover:text-blue-400 transition-colors">
                 Fornecedores
+              </Link>
+
+              <Link href="/lancarPrecos" className="hover:text-blue-400 transition-colors">
+                Lançar Preços
               </Link>
 
             </nav>

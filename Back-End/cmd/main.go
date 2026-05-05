@@ -15,6 +15,8 @@ func main() {
 
 	app.Use(cors.New())
 
+	api := app.Group("/api/v1")
+
 	database.ConectarBanco()
 
 	ProdutoController := controller.NewProdutoController(database.DB)
@@ -24,18 +26,18 @@ func main() {
 	RegistrosController := controller.NewRegistroPrecoController(database.DB)
 
 	// Rotas para Produtos, Fornecedores e Registros de Preço (GET)
-	app.Get("/produtos", ProdutoController.GetAllProdutos)
+	api.Get("/produtos", ProdutoController.GetAllProdutos)
 
-	app.Get("/fornecedores", FornecedorController.GetAllFornecedores)
+	api.Get("/fornecedores", FornecedorController.GetAllFornecedores)
 
-	app.Get("/registro_precos", RegistrosController.GetAllRegistrosPreco)
+	api.Get("/registro_precos", RegistrosController.GetAllRegistrosPreco)
 
 	// POST para criar um novo produto
-	app.Post("/produtos", ProdutoController.CreateProduto)
+	api.Post("/produtos", ProdutoController.CreateProduto)
 
-	app.Post("/fornecedores", FornecedorController.CreateFornecedor)
+	api.Post("/fornecedores", FornecedorController.CreateFornecedor)
 
-	app.Post("/registro_precos", RegistrosController.CreateRegistroPreco)
+	api.Post("/registro_precos", RegistrosController.CreateRegistroPreco)
 
 	log.Fatal(app.Listen(":3001"))
 }
