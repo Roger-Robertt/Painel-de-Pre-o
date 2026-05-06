@@ -25,6 +25,8 @@ func main() {
 
 	RegistrosController := controller.NewRegistroPrecoController(database.DB)
 
+	AuthController := controller.NewAuthController(database.DB)
+
 	// Rotas para Produtos, Fornecedores e Registros de Preço (GET)
 	api.Get("/produtos", ProdutoController.GetAllProdutos)
 
@@ -38,6 +40,10 @@ func main() {
 	api.Post("/fornecedores", FornecedorController.CreateFornecedor)
 
 	api.Post("/registro_precos", RegistrosController.CreateRegistroPreco)
+
+	api.Post("/login", AuthController.Login)
+
+	api.Post("/register", AuthController.Register)
 
 	log.Fatal(app.Listen(":3001"))
 }

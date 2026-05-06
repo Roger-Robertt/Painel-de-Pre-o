@@ -90,7 +90,7 @@ export default function Dashboard() {
     >
       <div className="flex flex-col gap-8">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Dashboard de Preços</h1>
+          <h1 className="text-3xl font-bold text-white mb-2"><span className="text-4xl font-bold bg-linear-to-r from-white via-blue-700 to-white bg-clip-text text-transparent animate-gradient-text">Dashboard de Preços</span></h1>
           <p className="text-zinc-400">Consulta a variação de preços e históricos.</p>
         </div>
 

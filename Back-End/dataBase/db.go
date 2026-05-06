@@ -17,7 +17,7 @@ func ConectarBanco() {
 		panic("Falha ao conectar no banco de dados!")
 	}
 
-	db.AutoMigrate(&model.Produto{}, &model.Fornecedor{}, &model.RegistroPreco{})
+	db.AutoMigrate(&model.Produto{}, &model.Fornecedor{}, &model.RegistroPreco{}, &model.Usuario{})
 
 	DB = db
 
