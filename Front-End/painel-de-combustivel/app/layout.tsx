@@ -24,19 +24,19 @@ export default function RootLayout({
 
             <nav className="grid grid-cols-1 gap-2 p-4 md:grid-cols-1 md:flex md:flex-col">
 
-              <Link href="/dashboard" className="hover:text-blue-400 transition-colors">
+              <Link href="/dashboard" className="hover:text-blue-400 transition-colors font-extrabold">
                 Dashboard
               </Link>
 
-              <Link href="/produtos" className="hover:text-blue-400 transition-colors">
+              <Link href="/produtos" className="hover:text-blue-400 transition-colors font-extrabold">
                 Produtos
               </Link>
 
-              <Link href="/fornecedores" className="hover:text-blue-400 transition-colors">
+              <Link href="/fornecedores" className="hover:text-blue-400 transition-colors font-extrabold">
                 Fornecedores
               </Link>
 
-              <Link href="/lancarPrecos" className="hover:text-blue-400 transition-colors">
+              <Link href="/lancarPrecos" className="hover:text-blue-400 transition-colors font-extrabold">
                 Lançar Preços
               </Link>
 

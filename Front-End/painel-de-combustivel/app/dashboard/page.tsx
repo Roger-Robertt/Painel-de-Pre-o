@@ -11,7 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { div } from "framer-motion/client";
 
 interface Produto {
   id: number;
