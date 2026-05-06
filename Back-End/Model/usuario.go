@@ -6,7 +6,6 @@ type Usuario struct {
 	Email    string `gorm:"not null" json:"email"`
 	Senha    string `gorm:"not null" json:"senha"`
 }
-
 func (Usuario) TableName() string {
     return "usuarios"
 }

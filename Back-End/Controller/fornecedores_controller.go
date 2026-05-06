@@ -17,8 +17,6 @@ func NewFornecedorController(DB *gorm.DB) *FornecedorController {
 		DB: DB,
 	}
 }
-
-// GET /fornecedores
 func (fc *FornecedorController) GetAllFornecedores(ctx fiber.Ctx) error {
 
 	var fornecedores []model.Fornecedor
@@ -33,8 +31,6 @@ func (fc *FornecedorController) GetAllFornecedores(ctx fiber.Ctx) error {
 
 	return ctx.JSON(fornecedores)
 }
-
-// POST /fornecedores
 func (fc *FornecedorController) CreateFornecedor(ctx fiber.Ctx) error {
 	var fornecedor model.Fornecedor
 

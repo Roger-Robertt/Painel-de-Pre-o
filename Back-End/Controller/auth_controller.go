@@ -3,10 +3,10 @@ package controller
 import (
 	model "painel-de-preco/back-end/model"
 	"github.com/gofiber/fiber/v3"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-// 1. Criar a estrutura do Controller (igual aos outros)
 type AuthController struct {
 	DB *gorm.DB
 }
@@ -16,27 +16,29 @@ func NewAuthController(DB *gorm.DB) *AuthController {
 		DB: DB,
 	}
 }
-
-// No arquivo controller/auth_controller.go
-
 func (ac *AuthController) Register(ctx fiber.Ctx) error {
 	var data map[string]string
 
-	// 1. Pega os dados enviados pelo formulário (nome, email, senha)
 	if err := ctx.Bind().JSON(&data); err != nil {
 		return ctx.Status(400).JSON(fiber.Map{
 			"error": "Erro ao processar dados",
 		})
 	}
 
-	// 2. Cria o objeto do usuário com o que veio do Front
 	usuario := model.Usuario{
 		Nome:  data["nome"],
 		Email: data["email"],
 		Senha: data["senha"],
 	}
 
-	// 3. Salva no banco de dados Postgres usando o GORM
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(usuario.Senha), bcrypt.DefaultCost)
+	if err != nil {
+		return ctx.Status(500).JSON(fiber.Map{
+			"error": "Erro ao criptografar a senha",
+		})
+	}
+	usuario.Senha = string(hashedPassword)
+
 	result := ac.DB.Create(&usuario)
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
@@ -49,7 +51,6 @@ func (ac *AuthController) Register(ctx fiber.Ctx) error {
 	})
 }
 
-// 2. Criar o método de Login usando essa estrutura
 func (ac *AuthController) Login(ctx fiber.Ctx) error {
 	var data map[string]string
 
@@ -60,7 +61,7 @@ func (ac *AuthController) Login(ctx fiber.Ctx) error {
 	}
 
 	var usuario model.Usuario
-	// 3. Usa o ac.DB (que vem do GORM) igual você faz nos outros arquivos
+
 	result := ac.DB.Where("email = ?", data["email"]).First(&usuario)
 
 	if result.Error != nil {
@@ -69,8 +70,8 @@ func (ac *AuthController) Login(ctx fiber.Ctx) error {
 		})
 	}
 
-	// 4. Verificação da Senha (ajuste se no model for 'Senha' ou 'Password')
-	if usuario.Senha != data["senha"] {
+	err := bcrypt.CompareHashAndPassword([]byte(usuario.Senha), []byte(data["senha"]))
+	if err != nil {
 		return ctx.Status(401).JSON(fiber.Map{
 			"error": "Senha incorreta",
 		})

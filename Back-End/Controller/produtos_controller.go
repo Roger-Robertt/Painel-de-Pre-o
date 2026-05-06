@@ -17,7 +17,6 @@ func NewProdutoController(DB *gorm.DB) *ProdutoController {
 	}
 }
 
-// GET /produtos
 func (pc *ProdutoController) GetAllProdutos(ctx fiber.Ctx) error {
 
 	var produtos []model.Produto
@@ -36,8 +35,6 @@ func (pc *ProdutoController) GetAllProdutos(ctx fiber.Ctx) error {
 
 	return ctx.JSON(produtos)
 }
-
-// POST /produtos
 func (pc *ProdutoController) CreateProduto(ctx fiber.Ctx) error {
 	var produto model.Produto
 

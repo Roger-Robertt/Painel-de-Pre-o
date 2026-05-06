@@ -17,23 +17,19 @@ func NewRegistroPrecoController(DB *gorm.DB) *RegistroPrecoController {
 		DB: DB,
 	}
 }
-
-// GET /registro_precos
 func (rpc *RegistroPrecoController) GetAllRegistrosPreco(ctx fiber.Ctx) error {
 
 	var registro []model.RegistroPreco
 
-	err := rpc.DB.Find(&registro).Error
+	err := rpc.DB.Preload("Produto").Find(&registro).Error
 
     if err != nil {
       return ctx.Status(500).JSON(fiber.Map{
-        "error": err.Error(), 
+        "error": "Erro ao carregar registros com produtos", 
     })
     }
 	return ctx.JSON(registro)
 }
-
-// POST /registro_precos
 func (rpc *RegistroPrecoController) CreateRegistroPreco(ctx fiber.Ctx) error {
 	var registro model.RegistroPreco
 
@@ -44,6 +40,10 @@ func (rpc *RegistroPrecoController) CreateRegistroPreco(ctx fiber.Ctx) error {
 	}
 
 	result := rpc.DB.Create(&registro)
+
+	if err := rpc.DB.Preload("Produto").Find(&registro).Error; err != nil {
+        return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao buscar registros"})
+    }
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{

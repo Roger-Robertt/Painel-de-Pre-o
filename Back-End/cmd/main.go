@@ -19,22 +19,31 @@ func main() {
 
 	database.ConectarBanco()
 
+
+
 	ProdutoController := controller.NewProdutoController(database.DB)
 
 	FornecedorController := controller.NewFornecedorController(database.DB)
 
 	RegistrosController := controller.NewRegistroPrecoController(database.DB)
 
+	PrecoController := controller.NewPrecoController(database.DB)
+
 	AuthController := controller.NewAuthController(database.DB)
 
-	// Rotas para Produtos, Fornecedores e Registros de Preço (GET)
+
+
 	api.Get("/produtos", ProdutoController.GetAllProdutos)
 
 	api.Get("/fornecedores", FornecedorController.GetAllFornecedores)
 
 	api.Get("/registro_precos", RegistrosController.GetAllRegistrosPreco)
 
-	// POST para criar um novo produto
+	api.Get("/precos/:id", PrecoController.GetRegistroPrecoByID)
+
+
+
+
 	api.Post("/produtos", ProdutoController.CreateProduto)
 
 	api.Post("/fornecedores", FornecedorController.CreateFornecedor)
@@ -44,6 +53,10 @@ func main() {
 	api.Post("/login", AuthController.Login)
 
 	api.Post("/register", AuthController.Register)
+
+	
+
+	api.Put("/precos/:id", PrecoController.UpdatePreco)
 
 	log.Fatal(app.Listen(":3001"))
 }

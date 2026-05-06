@@ -41,8 +41,8 @@ export default function Dashboard() {
   useEffect(() => {
 
     Promise.all([
-      fetch("http://127.0.0.1:3001/api/v1/produtos").then(res => res.json()).catch(() => []),
-      fetch("http://127.0.0.1:3001/api/v1/registro_precos").then(res => res.json()).catch(() => [])
+      fetch("http://127.0.0.1:3001/api/v1/produtos", { cache: 'no-store' }).then(res => res.json()).catch(() => []),
+      fetch("http://127.0.0.1:3001/api/v1/registro_precos", { cache: 'no-store' }).then(res => res.json()).catch(() => [])
     ])
       .then(([dadosProdutos, dadosRegistros]) => {
 
@@ -71,7 +71,7 @@ export default function Dashboard() {
       .filter((reg) => reg && reg.produto_id === Number(produtoSelecionado))
       .map((reg) => ({
         data: reg.data ? reg.data.split('-').reverse().join('/') : "",
-        preco: reg.preco || 0,
+        preco: Number(reg.preco) || 0,
       }))
       .sort((a, b) => {
         const dateA = new Date(a.data.split('/').reverse().join('-')).getTime();
@@ -117,10 +117,11 @@ export default function Dashboard() {
               <ResponsiveContainer width="100%" height={295}>
 
                 <LineChart data={dadosGrafico}>
+                  key={registros.length + (registros[0]?.preco || 0)}
 
                   <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                   <XAxis dataKey="data" stroke="#71717a" />
-                  <YAxis stroke="#71717a" domain={["auto", "auto"]} />
+                  <YAxis stroke="#71717a" domain={[0, 10]} />
                   <Tooltip
                     contentStyle={{ background: "#18181b", borderColor: "#27272a", borderRadius: "8px" }}
                     labelStyle={{ color: "#a1a1aa" }}

@@ -7,7 +7,6 @@ interface Produto {
     id: number;
     nome: string;
 }
-
 export default function CadastroPreco() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtoId, setProdutoId] = useState('');
@@ -15,25 +14,33 @@ export default function CadastroPreco() {
     const [listarFornecedores, setListarFornecedores] = useState<{ id: number; nome: string }[]>([]);
     const [preco, setPreco] = useState('');
     const [data, setData] = useState('');
+    const [registros, setRegistros] = useState<{ id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string, produto?: { id: number, nome: string } }[]>([]); // Estado para armazenar os registros de preços
+    const [editandoId, setEditandoId] = useState<string | null>(null);
     const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({
         type: '',
         message: '',
     });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/api/v1/produtos')
+        fetch('http://127.0.0.1:3001/api/v1/produtos', { cache: 'no-store' })
             .then((res) => res.json())
             .then((data) => setProdutos(data))
             .catch(() => console.error('Erro ao carregar produtos'));
     }, []);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/api/v1/fornecedores')
+        fetch('http://127.0.0.1:3001/api/v1/fornecedores', { cache: 'no-store' })
             .then((res) => res.json())
             .then((data) => setListarFornecedores(data))
             .catch(() => console.error('Erro ao carregar fornecedores'));
     }, []);
 
+    useEffect(() => {
+        fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' })
+            .then((res) => res.json())
+            .then((data) => setRegistros(data))
+            .catch(() => console.error('Erro ao carregar registros de preços'));
+    }, []);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -46,28 +53,43 @@ export default function CadastroPreco() {
 
         console.log("Enviando para o Go:", novoRegistro);
 
+        const url = editandoId
+            ? `http://127.0.0.1:3001/api/v1/precos/${editandoId}`
+            : 'http://127.0.0.1:3001/api/v1/registro_precos';
+
+        const method = editandoId ? 'PUT' : 'POST';
+
         try {
-            const response = await fetch('http://127.0.0.1:3001/api/v1/registro_precos', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoRegistro),
             });
 
             if (response.ok) {
-                setStatus({ type: 'success', message: 'Preço cadastrado com sucesso!' });
-                setFornecedorName('');
+                setStatus({
+                    type: 'success',
+                    message: editandoId ? 'Preço atualizado com sucesso!' : 'Preço cadastrado com sucesso!'
+                });
 
+                setEditandoId(null);
+                setFornecedorName('');
                 setPreco('');
                 setData('');
                 setProdutoId('');
             } else {
-                const errorData = await response.json();
-                console.error("Erro da API:", errorData);
-                setStatus({ type: 'error', message: 'Erro ao cadastrar o preço no banco.' });
+                setStatus({ type: 'error', message: 'Erro ao processar a requisição.' });
             }
         } catch (error) {
             setStatus({ type: 'error', message: 'Erro de conexão com o servidor.' });
         }
+    };
+    const iniciarEdicao = (registro: any) => {
+        setEditandoId(registro.id.toString());
+        setFornecedorName(registro.fornecedor_nome);
+        setPreco(registro.preco.toString());
+        setData(registro.data);
+        setProdutoId(registro.produto_id.toString());
     };
 
     return (
@@ -78,7 +100,6 @@ export default function CadastroPreco() {
             transition={{ duration: 2 }}
             className="p-8"
         >
-
             <div className="p-8 max-w-lg mx-auto bg-zinc-900 text-white rounded-lg shadow-md mt-10">
                 <h1 className="text-2xl font-bold mb-6">Cadastro de Preço</h1>
 
@@ -155,6 +176,31 @@ export default function CadastroPreco() {
                         Salvar Preço
                     </button>
                 </form>
+            </div>
+
+            <div className="mt-10 max-w-lg mx-auto">
+                <h2 className="text-xl font-bold mb-4 text-zinc-400">Histórico de Lançamentos</h2>
+                <div className="space-y-2">
+                    {registros.map((reg) => (
+                        <div key={reg.id} className="p-4 bg-zinc-800 rounded border border-zinc-700 flex justify-between items-center">
+                            <span className="text-xs font-bold text-blue-500 uppercase">
+                                {reg.produto?.nome || "Combustível"}
+                            </span>
+
+                            <div>
+                                <p className="font-bold">{reg.fornecedor_nome}</p>
+                                <p className="text-sm text-zinc-500">R$ {reg.preco} - {reg.data}</p>
+                            </div>
+
+                            <button
+                                onClick={() => iniciarEdicao(reg)}
+                                className="text-blue-500 hover:underline text-sm"
+                            >
+                                Corrigir
+                            </button>
+                        </div>
+                    ))}
+                </div>
             </div>
         </motion.div>
     );

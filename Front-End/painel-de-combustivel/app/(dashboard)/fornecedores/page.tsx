@@ -2,12 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-
 const formatarCNPJ = (cnpj: string) => {
     const numeros = cnpj.replace(/\D/g, '');
     return numeros.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
 };
-
 export default function CadastroFornecedor() {
     const [nome, setNome] = useState("");
     const [cnpj, setCnpj] = useState("");
