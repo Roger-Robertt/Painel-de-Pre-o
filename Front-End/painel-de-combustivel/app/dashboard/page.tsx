@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { div } from "framer-motion/client";
 
 interface Produto {
   id: number;
@@ -113,28 +114,30 @@ export default function Dashboard() {
           <h2 className="text-lg font-semibold text-white mb-4">Variação de Preço ao Longo do Tempo</h2>
           {dadosGrafico.length > 0 ? (
 
-            <ResponsiveContainer width="100%" height={300}>
+            <div className="grid grid-cols-1 gap-8">
+              <ResponsiveContainer width="100%" height={295}>
 
-              <LineChart data={dadosGrafico}>
+                <LineChart data={dadosGrafico}>
 
-                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                <XAxis dataKey="data" stroke="#71717a" />
-                <YAxis stroke="#71717a" domain={["auto", "auto"]} />
-                <Tooltip
-                  contentStyle={{ background: "#18181b", borderColor: "#27272a", borderRadius: "8px" }}
-                  labelStyle={{ color: "#a1a1aa" }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="preco"
-                  stroke="#3b82f6"
-                  strokeWidth={3}
-                  dot={{ r: 6 }}
-                  activeDot={{ r: 8 }}
-                />
-              </LineChart>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+                  <XAxis dataKey="data" stroke="#71717a" />
+                  <YAxis stroke="#71717a" domain={["auto", "auto"]} />
+                  <Tooltip
+                    contentStyle={{ background: "#18181b", borderColor: "#27272a", borderRadius: "8px" }}
+                    labelStyle={{ color: "#a1a1aa" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="preco"
+                    stroke="#3b82f6"
+                    strokeWidth={3}
+                    dot={{ r: 6 }}
+                    activeDot={{ r: 8 }}
+                  />
+                </LineChart>
 
-            </ResponsiveContainer>
+              </ResponsiveContainer>
+            </div>
           ) : (
             <div className="h-full flex items-center justify-center text-zinc-500">
               Nenhum histórico de preço encontrado para este produto.
@@ -142,39 +145,40 @@ export default function Dashboard() {
           )}
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50">
-          <div className="p-6 border-b border-zinc-800 bg-zinc-900">
-            <h2 className="text-lg font-semibold text-white">Preços Atuais por Fornecedor</h2>
+        <div className="grid grid-cols-1 gap-8">
+          <div className="overflow-x-auto no-scrollbar rounded-xl border border-zinc-800 bg-zinc-900/50">
+            <div className="p-6 border-b border-zinc-800 bg-zinc-900">
+              <h2 className="text-lg font-semibold text-white">Preços Atuais por Fornecedor</h2>
+            </div>
+            <table className="w-full text-left border-collapse min-w-150 md:min-w-full">
+
+              <thead>
+                <tr className="border-b border-zinc-800 bg-zinc-950/50">
+                  <th className="p-4 font-semibold text-zinc-400">Fornecedor</th>
+                  <th className="p-4 font-semibold text-zinc-400">Preço</th>
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-zinc-800">
+                {registros
+                  .filter((reg) => reg.produto_id === Number(produtoSelecionado))
+                  .map((reg) => (
+                    <tr key={reg.id} className="hover:bg-zinc-800/30 transition-colors">
+                      <td className="p-4 text-white font-medium">
+
+                        {reg.fornecedor_nome ? `Fornecedor ${reg.fornecedor_nome}` : "Fornecedor Padrão"}
+                      </td>
+                      <td className="p-4 text-blue-400 font-semibold">
+                        R$ {reg.preco.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+
+            </table>
+
           </div>
-          <table className="w-full text-left border-collapse">
-
-            <thead>
-              <tr className="border-b border-zinc-800 bg-zinc-950/50">
-                <th className="p-4 font-semibold text-zinc-400">Fornecedor</th>
-                <th className="p-4 font-semibold text-zinc-400">Preço</th>
-              </tr>
-            </thead>
-
-            <tbody className="divide-y divide-zinc-800">
-              {registros
-                .filter((reg) => reg.produto_id === Number(produtoSelecionado))
-                .map((reg) => (
-                  <tr key={reg.id} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="p-4 text-white font-medium">
-
-                      {reg.fornecedor_nome ? `Fornecedor ${reg.fornecedor_nome}` : "Fornecedor Padrão"}
-                    </td>
-                    <td className="p-4 text-blue-400 font-semibold">
-                      R$ {reg.preco.toFixed(2)}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-
-          </table>
-
         </div>
-
       </div>
     </motion.div>
   );
