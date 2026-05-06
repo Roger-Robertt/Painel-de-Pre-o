@@ -14,7 +14,7 @@ export default function CadastroPreco() {
     const [listarFornecedores, setListarFornecedores] = useState<{ id: number; nome: string }[]>([]);
     const [preco, setPreco] = useState('');
     const [data, setData] = useState('');
-    const [registros, setRegistros] = useState<{ id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string, produto?: { id: number, nome: string } }[]>([]); // Estado para armazenar os registros de preços
+    const [registros, setRegistros] = useState<{ id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string, produto?: { id: number, nome: string } }[]>([]);
     const [editandoId, setEditandoId] = useState<string | null>(null);
     const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({
         type: '',
