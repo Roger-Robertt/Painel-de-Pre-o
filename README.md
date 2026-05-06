@@ -17,22 +17,7 @@ Este projeto foi desenvolvido como uma solução para o desafio técnico de subs
 
 ---
 
-## 🛠️ 2. Arquitetura e Decisões Técnicas
-
-Para garantir uma aplicação escalável, de alta performance e fácil de manter, optei por uma arquitetura moderna dividindo as responsabilidades de forma clara:
-
-### **Front-End: Next.js (React) & Tailwind CSS**
-* **Next.js:** Estrutura robusta de roteamento e renderização rápida.
-* **Painel Visual:** Implementação de gráficos de linha interativos para exibir de forma intuitiva a evolução histórica dos preços dos combustíveis cadastrados.
-* **Tailwind CSS:** Estilização responsiva, limpa e padronizada.
-
-### **Back-End: Go (Golang)**
-* **Go:** Escolhido por sua altíssima performance, baixo consumo de recursos e tipagem estática que previne erros em tempo de execução.
-* **REST API:** Construção de endpoints focados para receber os cadastros e retornar o histórico de preços filtrado por produto/fornecedor.
-
-### **Banco de Dados: PostgreSQL & Docker**
-* **Docker & Docker Compose:** Todo o ambiente do banco de dados foi conteinerizado para garantir que o projeto rode com exatidão em qualquer máquina, sem a necessidade de instalar o PostgreSQL localmente no sistema operacional.
-* **PostgreSQL:** Banco de dados relacional robusto e ideal para manter a integridade dos dados históricos dos combustíveis e fornecedores.
+ Painel de Preços de Combustíveis (Full-Stack)Solução robusta para monitoramento de variação de preços, integrando Go Fiber, Next.js e PostgreSQL.Este projeto foi desenvolvido para substituir processos manuais de controle de preços por uma plataforma digital automatizada, permitindo uma análise estratégica de tendências de mercado.🚀 1. Diferenciais de Arquitetura e Decisões TécnicasDiferente de um CRUD básico, esta aplicação foi desenhada com foco em performance e experiência do usuário (UX):Back-End (Go & Fiber)Performance: Uso do Go por sua eficiência em concorrência e baixo consumo de memória.GORM (ORM): Implementado para garantir segurança nas transações SQL e facilitar relacionamentos complexos.Relacionamentos: Uso de Preload para entregar dados mastigados ao front-end (ex: trazer o nome do combustível vinculado ao preço).Integridade: Lógica de Updates no banco para garantir que correções de preços não corrompam outros campos do registro.Front-End (Next.js 14 & TypeScript)Route Groups (dashboard): Organização avançada de rotas para compartilhar layouts (como menus e headers) entre a visualização de dados e o cadastro.Modo de Edição Híbrido: O formulário de cadastro detecta automaticamente se o usuário deseja criar ou corrigir um preço, alternando entre métodos POST e PUT.Sincronização em Tempo Real: Implementação de política de cache: 'no-store' nas chamadas de API, garantindo que o gráfico reflita as alterações do banco instantaneamente.Banco de Dados & InfraDockerization: Todo o ambiente PostgreSQL roda em containers, garantindo que o projeto funcione em qualquer máquina com um único comando.Persistência: Volumes Docker configurados para que os dados históricos não sejam perdidos ao reiniciar o ambiente.
 
 ---
 
