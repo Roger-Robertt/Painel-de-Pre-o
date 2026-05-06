@@ -17,52 +17,72 @@ Este projeto foi desenvolvido como uma solução para o desafio técnico de subs
 
 ---
 
- Painel de Preços de Combustíveis (Full-Stack)Solução robusta para monitoramento de variação de preços, integrando Go Fiber, Next.js e PostgreSQL.Este projeto foi desenvolvido para substituir processos manuais de controle de preços por uma plataforma digital automatizada, permitindo uma análise estratégica de tendências de mercado.🚀 1. Diferenciais de Arquitetura e Decisões TécnicasDiferente de um CRUD básico, esta aplicação foi desenhada com foco em performance e experiência do usuário (UX):Back-End (Go & Fiber)Performance: Uso do Go por sua eficiência em concorrência e baixo consumo de memória.GORM (ORM): Implementado para garantir segurança nas transações SQL e facilitar relacionamentos complexos.Relacionamentos: Uso de Preload para entregar dados mastigados ao front-end (ex: trazer o nome do combustível vinculado ao preço).Integridade: Lógica de Updates no banco para garantir que correções de preços não corrompam outros campos do registro.Front-End (Next.js 14 & TypeScript)Route Groups (dashboard): Organização avançada de rotas para compartilhar layouts (como menus e headers) entre a visualização de dados e o cadastro.Modo de Edição Híbrido: O formulário de cadastro detecta automaticamente se o usuário deseja criar ou corrigir um preço, alternando entre métodos POST e PUT.Sincronização em Tempo Real: Implementação de política de cache: 'no-store' nas chamadas de API, garantindo que o gráfico reflita as alterações do banco instantaneamente.Banco de Dados & InfraDockerization: Todo o ambiente PostgreSQL roda em containers, garantindo que o projeto funcione em qualquer máquina com um único comando.Persistência: Volumes Docker configurados para que os dados históricos não sejam perdidos ao reiniciar o ambiente.
+## 🛠 2. Arquitetura e Decisões Técnicas
+
+Para garantir uma aplicação escalável e de alta performance, optei por uma arquitetura Full-Stack moderna:
+
+### **🚀 Back-End: Go (Fiber)**
+*   **Performance:** Escolhido pela altíssima eficiência e baixo consumo de recursos.
+*   **GORM (ORM):** Utilizado para mapeamento relacional e segurança em transações SQL.
+*   **Relacionamentos Inteligentes:** Implementação de `Preload` para entregar objetos complexos ao Front-end (ex: vincular nomes de produtos aos registros de preços).
+*   **Lógica de Atualização (PUT):** Implementação de Handlers específicos para correção de dados, garantindo a integridade dos registros históricos.
+
+### **💻 Front-End: Next.js 14 (App Router)**
+*   **Route Groups `(dashboard)`:** Organização avançada de rotas para compartilhamento de layouts e separação lógica de módulos.
+*   **Gerenciamento de Estado e Cache:** Uso estratégico de `cache: 'no-store'` para garantir sincronização em tempo real entre as edições no banco e os gráficos.
+*   **Visualização de Dados:** Integração com **Recharts** para transformar dados brutos em gráficos de linha interativos.
+
+### **🗄️ Infraestrutura: PostgreSQL & Docker**
+*   **Conteinerização:** Setup do banco de dados via Docker Compose para garantir que o ambiente seja idêntico em qualquer máquina (Zero Configuration local).
+*   **Persistência de Dados:** Configuração de volumes para segurança das informações históricas.
 
 ---
 
-## 📁 3. Estrutura do Projeto
+## 📁 3. Estrutura do Repositório
 
-```text
-├── Back-End
-│   ├── cmd/main.go               # Ponto de entrada da aplicação Go
-│   ├── Controller/               # Lógica de controle e rotas da API
-│   ├── Model/                    # Estruturas de dados (Produtos, Registros)
-│   ├── dataBase/db.go            # Conexão com o PostgreSQL
-│   └── docker-compose.yml        # Configuração do banco no Docker
-├── Front-End
-│   └── painel-de-combustivel/    # Aplicação Next.js/React do Painel Visual
-└── README.md
----
-
----
-
-## 📌 4. Pré-requisitos para Execução
-
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-
-* **Git** → [Download](https://git-scm.com/)
-* **Go** `(v1.20 ou superior)` → [Download](https://go.dev/)
-* **Node.js** `(v18 ou superior)` → [Download](https://nodejs.org/)
-* **Docker & Docker Compose** → [Download](https://www.docker.com/)
-
----
-
-## 🚀 5. Como Executar o Projeto
-
-Siga os passos abaixo no seu terminal para configurar e rodar a aplicação localmente:
-
-### **Passo 1: Clonar o Repositório**
 ```bash
-# Clone o projeto
-git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+├── Back-End
+│   ├── cmd/main.go              # Ponto de entrada e definição de rotas
+│   ├── Controller/              # Handlers (Lógica de CRUD e Preload)
+│   ├── Model/                   # Estruturas de dados (GORM)
+│   ├── dataBase/                # Configuração de conexão PostgreSQL
+│   └── docker-compose.yml       # Orquestração do banco de dados
+├── Front-End
+│   └── painel-de-combustivel
+│       ├── app/(dashboard)      # Layouts e páginas (Dashboard e Lançamentos)
+│       └── components/          # Componentes de UI responsivos
+└── README.md
+```
 
-# Acesse a pasta raiz do projeto
-cd seu-repositorio
+---
 
-🌟 6. Diferenciais Implementados
-🐳 Dockerização Total do Banco: Facilidade no setup do projeto (Zero Configuration local para o banco).
+## 🚀 4. Como Executar o Projeto
 
-💾 Camada de Persistência Isolada: Utilização de volumes Docker para garantir que os seus dados não sejam perdidos ao desligar ou reiniciar o computador.
+### **Passo 1: Banco de Dados**
+Dentro da pasta `Back-End`, execute:
+```bash
+docker-compose up -d
+```
 
-📈 Inteligência de Negócios: Transformação de dados brutos do PostgreSQL em inteligência visual por meio de gráficos dinâmicos de fácil leitura.
+### **Passo 2: Back-End**
+```bash
+go run cmd/main.go
+```
+
+### **Passo 3: Front-End**
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## 🌟 5. Diferenciais Implementados
+
+*   ✅ **CRUD Híbrido:** Formulário inteligente que alterna entre Criação e Edição (POST/PUT).
+*   ✅ **Preload de Associações:** O backend entrega o nome real do combustível, eliminando processamento desnecessário no cliente.
+*   ✅ **UX Reativa:** Feedback visual de sucesso/erro e scroll automático para correções.
+*   ✅ **Dashboard Real-Time:** Atualização instantânea dos gráficos ao salvar novas informações.
+
+---
+
