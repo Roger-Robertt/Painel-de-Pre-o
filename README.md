@@ -32,7 +32,7 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 *   **Gerenciamento de Estado e Cache:** Uso estratégico de `cache: 'no-store'` para garantir sincronização em tempo real entre as edições no banco e os gráficos.
 *   **Visualização de Dados:** Integração com **Recharts** para transformar dados brutos em gráficos de linha interativos.
 
-### 📐 Layout e Responsividade (CSS Grid)
+### 📐 Layout e Responsividade (Tailwind CSS Grid)
 
 A estrutura de interface foi construída utilizando **CSS Grid** (via Tailwind CSS), garantindo um layout robusto e adaptável:
 
