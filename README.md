@@ -60,12 +60,14 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 
 ### **Passo 1: Banco de Dados**
 Dentro da pasta `Back-End`, execute:
+**Go(Fiber)**
 ```Ubuntu(WSL)
 docker-compose up -d
 ```
 
 ### **passo 2: Banco de Dados**
 Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml:
+**Go(Fiber)**
 ```
 version: '3.8'
 services:
@@ -87,6 +89,7 @@ volumes:
 ### **Passo 3: Banco de Dados**
 Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
 Dentro da pasta `Back-End` execute:
+**Go(Fiber)**
 ```Ubuntu(WSL)
   docker-compose down
   docker-compose up -d --build
@@ -94,19 +97,48 @@ Dentro da pasta `Back-End` execute:
 
 ### **Passo 4: Banco de Dados**
 Dentro da pasta `Back-End` execute:
+**Go(Fiber)**
 ```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
 ### **Passo 5: Banco de Dados**
 Dentro da pasta `Banc-End` observação:
+**Go(Fiber)**
 ```Ubuntu(WSL)
 Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL).
 ```
-### **Passo 6: Front-End**
-```bash
+### **Passo 6: Back-End**
+**O CORS Cross-Origin Resource Sharing é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc. não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes ex: Front na 3000 e Back na 8080.**
+
+📦 Como importar
+**Go(Fiber)**
+```PowerShell
+"github.com/gofiber/fiber/v3/middleware/cors"
+```
+### **Passo 7: Front-End**
+
+📦 Como instalar
+**Next.js**
+```PowerShell
 npm install
 npm run dev
+```
+### **Passo 8: Front-End**
+**O Framer Motion facilita a criação de animações complexas que seriam difíceis de fazer apenas com CSS puro. Ele é focado em interatividade e gestos.**
+
+📦 Como instalar
+**Next.js**
+```PowerShell
+npm install framer-motion
+```
+### **Passo 9: Front-End**
+**A Recharts serve para transformar dados brutos (listas de números e datas) em gráficos visuais e interativos. O diferencial dela é ser baseada em SVG, o que garante que os gráficos fiquem nítidos em qualquer resolução.**
+
+📦 Como instalar
+**Next.js**
+```PowerShell
+npm install recharts
 ```
 
 ---
