@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Produto, RegistroPreco } from '@/types';
+
 import {
   LineChart,
   Line,
@@ -11,27 +13,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-interface Produto {
-  id: number;
-  nome: string;
-}
-
-export interface Fornecedor {
-  id: number;
-  nome: string;
-  cnpj: string;
-}
-
-interface RegistroPreco {
-  id: number;
-  produto_id: number;
-  fornecedor_nome: string;
-  preco: number;
-  data: string;
-
-  fornecedor?: Fornecedor;
-}
 
 export default function Dashboard() {
   const [produtos, setProdutos] = useState<Produto[]>([]);

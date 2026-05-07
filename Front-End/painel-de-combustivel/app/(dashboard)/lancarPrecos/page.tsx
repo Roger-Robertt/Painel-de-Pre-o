@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Produto } from '@/types';
 
-interface Produto {
-    id: number;
-    nome: string;
-}
+
 export default function CadastroPreco() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtoId, setProdutoId] = useState('');
@@ -84,7 +82,7 @@ export default function CadastroPreco() {
             setStatus({ type: 'error', message: 'Erro de conexão com o servidor.' });
         }
     };
-    const iniciarEdicao = (registro: any) => {
+    const iniciarEdicao = (registro: { id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string }) => {
         setEditandoId(registro.id.toString());
         setFornecedorName(registro.fornecedor_nome);
         setPreco(registro.preco.toString());
