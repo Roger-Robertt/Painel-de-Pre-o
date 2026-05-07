@@ -144,7 +144,7 @@ npm install recharts
 
 ---
 
-## 🌟 5. Diferenciais Implementados
+## 🌟 10. Diferenciais Implementados
 
 *   ✅ **CRUD Híbrido:** Formulário inteligente que alterna entre Criação e Edição (POST/PUT).
 *   ✅ **Preload de Associações:** O backend entrega o nome real do combustível, eliminando processamento desnecessário no cliente.
@@ -153,7 +153,11 @@ npm install recharts
 
 ---
 
-### 6. 🔒 Segurança (Bônus)
+## 🌟 11. Sobre pegar com o mesmo fornecedor
+
+*   ✅ Decidi permitir múltiplos registros para garantir a rastreabilidade total das variações de mercado intra-dia (mudanças de preço na mesma data). Para manter a integridade e flexibilidade,eu ja mencionei no primeiro tópico la em cima que implementei uma lógica de Update (PUT): caso o usuário precise corrigir um lançamento específico em vez de criar um novo, o sistema permite a edição direta. No front-end, os dados são tratados para exibir o último valor registrado, garantindo que o gráfico reflita sempre a cotação mais atualizada.
+  
+### 12. 🔒 Segurança (Bônus)
 *   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
 
 
