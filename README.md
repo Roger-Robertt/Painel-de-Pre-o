@@ -86,3 +86,7 @@ npm run dev
 
 ---
 
+### 6. 🔒 Segurança (Bônus)
+*   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
+
+
