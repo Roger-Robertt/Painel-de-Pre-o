@@ -59,25 +59,92 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 ## 🚀 4. Como Executar o Projeto
 
 ### **Passo 1: Banco de Dados**
-Dentro da pasta `Back-End`, execute:
-```bash
+Dentro da pasta `Back-End`, execute no terminal **Ubuntu(WSL)** do 
+**Go(Fiber)**:
+```Ubuntu(WSL)
 docker-compose up -d
 ```
 
-### **Passo 2: Back-End**
-```bash
+### **passo 2: Banco de Dados**
+Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml no terminal **Ubuntu(WSL)** do 
+**Go(Fiber)**:
+```
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: usuario_exemplo
+      POSTGRES_PASSWORD: senha_secreta
+      POSTGRES_DB: meu_banco
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+ ``` 
+### **Passo 3: Banco de Dados**
+Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações.
+
+Dentro da pasta `Back-End` execute no terminal **Ubuntu(WSL)** do 
+**Go(Fiber)**:
+```Ubuntu(WSL)
+  docker-compose down
+  docker-compose up -d --build
+```
+
+### **Passo 4: Banco de Dados**
+Dentro da pasta `Back-End` execute no terminal **Ubuntu(WSL)** do 
+**Go(Fiber)**:
+```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
-### **Passo 3: Front-End**
-```bash
+### **Passo 5: Banco de Dados**
+Dentro da pasta `Banc-End` observação no terminal **Ubuntu(WSL)** do 
+**Go(Fiber)**:
+```Ubuntu(WSL)
+Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL) todos esses comandos.
+```
+### **Passo 6: Back-End**
+**O CORS (Cross-Origin Resource Sharing) é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc.) não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes (ex: Front na 3000 e Back na 8080).**
+
+📦 Como importar no arquivo **main.go** do
+**Go(Fiber)**
+```Ubuntu(WSL)
+"github.com/gofiber/fiber/v3/middleware/cors"
+```
+### **Passo 7: Front-End**
+
+📦 Como instalar no terminal **PowerShell** do 
+**Next.js**
+```PowerShell
 npm install
 npm run dev
+```
+### **Passo 8: Front-End**
+**O Framer Motion facilita a criação de animações complexas que seriam difíceis de fazer apenas com CSS puro. Ele é focado em interatividade e gestos.**
+
+📦 Como instalar no terminal **PowerShell** do 
+**Next.js**
+```PowerShell
+npm install framer-motion
+```
+### **Passo 9: Front-End**
+**A Recharts serve para transformar dados brutos (listas de números e datas) em gráficos visuais e interativos. O diferencial dela é ser baseada em SVG, o que garante que os gráficos fiquem nítidos em qualquer resolução.**
+
+📦 Como instalar no terminal **PowerShell** do 
+**Next.js**
+```PowerShell
+npm install recharts
 ```
 
 ---
 
-## 🌟 5. Diferenciais Implementados
+## 🌟 10. Diferenciais Implementados
 
 *   ✅ **CRUD Híbrido:** Formulário inteligente que alterna entre Criação e Edição (POST/PUT).
 *   ✅ **Preload de Associações:** O backend entrega o nome real do combustível, eliminando processamento desnecessário no cliente.
@@ -86,7 +153,11 @@ npm run dev
 
 ---
 
-### 6. 🔒 Segurança (Bônus)
+## 🌟 11. Sobre pegar com o mesmo fornecedor
+
+*   ✅ Decidi permitir múltiplos registros para garantir a rastreabilidade total das variações de mercado intra-dia (mudanças de preço na mesma data). Para manter a integridade e flexibilidade,eu ja mencionei no primeiro tópico la em cima que implementei uma lógica de Update (PUT): caso o usuário precise corrigir um lançamento específico em vez de criar um novo, o sistema permite a edição direta. No front-end, os dados são tratados para exibir o último valor registrado, garantindo que o gráfico reflita sempre a cotação mais atualizada.
+  
+### 12. 🔒 Segurança (Bônus)
 *   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
 
 
