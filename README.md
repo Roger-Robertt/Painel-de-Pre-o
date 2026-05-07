@@ -59,14 +59,14 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 ## 🚀 4. Como Executar o Projeto
 
 ### **Passo 1: Banco de Dados**
-Dentro da pasta `Back-End`, execute no 
+Dentro da pasta `Back-End`, execute no terminal Ubuntu(WSL) do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
 docker-compose up -d
 ```
 
 ### **passo 2: Banco de Dados**
-Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml no 
+Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml no terminal Ubuntu(WSL) do 
 **Go(Fiber)**:
 ```
 version: '3.8'
@@ -88,7 +88,7 @@ volumes:
  ``` 
 ### **Passo 3: Banco de Dados**
 Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
-Dentro da pasta `Back-End` execute no 
+Dentro da pasta `Back-End` execute no terminal Ubuntu(WSL) do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
   docker-compose down
@@ -96,14 +96,14 @@ Dentro da pasta `Back-End` execute no
 ```
 
 ### **Passo 4: Banco de Dados**
-Dentro da pasta `Back-End` execute no
+Dentro da pasta `Back-End` execute no terminal Ubuntu(WSL) do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
 ### **Passo 5: Banco de Dados**
-Dentro da pasta `Banc-End` observação no 
+Dentro da pasta `Banc-End` observação no terminal Ubuntu(WSL) do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
 Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL).
@@ -118,7 +118,7 @@ Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(W
 ```
 ### **Passo 7: Front-End**
 
-📦 Como instalar no 
+📦 Como instalar no terminal PowerShell do 
 **Next.js**
 ```PowerShell
 npm install
@@ -127,7 +127,7 @@ npm run dev
 ### **Passo 8: Front-End**
 **O Framer Motion facilita a criação de animações complexas que seriam difíceis de fazer apenas com CSS puro. Ele é focado em interatividade e gestos.**
 
-📦 Como instalar no 
+📦 Como instalar no terminal PowerShell do 
 **Next.js**
 ```PowerShell
 npm install framer-motion
@@ -135,7 +135,7 @@ npm install framer-motion
 ### **Passo 9: Front-End**
 **A Recharts serve para transformar dados brutos (listas de números e datas) em gráficos visuais e interativos. O diferencial dela é ser baseada em SVG, o que garante que os gráficos fiquem nítidos em qualquer resolução.**
 
-📦 Como instalar no 
+📦 Como instalar no terminal PowerShell do 
 **Next.js**
 ```PowerShell
 npm install recharts
