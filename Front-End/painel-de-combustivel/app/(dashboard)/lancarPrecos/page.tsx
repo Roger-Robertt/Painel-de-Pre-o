@@ -96,6 +96,18 @@ export default function CadastroPreco() {
 
     };
 
+    const formatarMoeda = (valor: string) => {
+
+        const apenasNumeros = valor.replace(/\D/g, '');
+
+        const valorFormatado = Number(apenasNumeros) / 100;
+
+        return valorFormatado.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+    };
+
     return (
 
         <motion.div
@@ -152,10 +164,10 @@ export default function CadastroPreco() {
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Preço por Litro (R$)</label>
                         <input
-                            type="number"
+                            type="text"
                             step="0.01"
                             value={preco}
-                            onChange={(e) => setPreco(e.target.value)}
+                            onChange={(e) => setPreco(formatarMoeda(e.target.value))}
                             className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500"
                             placeholder="Ex: 5.49"
                             required
