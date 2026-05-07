@@ -87,7 +87,8 @@ volumes:
   db_data:
  ``` 
 ### **Passo 3: Banco de Dados**
-Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
+Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações.
+
 Dentro da pasta `Back-End` execute no terminal **Ubuntu(WSL)** do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
