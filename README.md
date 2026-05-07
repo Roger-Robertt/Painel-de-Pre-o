@@ -107,7 +107,7 @@ go run cmd/main.go
 Dentro da pasta `Banc-End` observação no terminal **Ubuntu(WSL)** do 
 **Go(Fiber)**:
 ```Ubuntu(WSL)
-Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL) todas esses comandos.
+Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL) todos esses comandos.
 ```
 ### **Passo 6: Back-End**
 **O CORS (Cross-Origin Resource Sharing) é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc.) não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes (ex: Front na 3000 e Back na 8080).**
