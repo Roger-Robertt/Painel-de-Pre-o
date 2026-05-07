@@ -65,7 +65,7 @@ docker-compose up -d
 ```
 
 ### passo 2: Back_-End
-
+```
 version: '3.8'
 services:
   db:
@@ -82,12 +82,12 @@ services:
 
 volumes:
   db_data:
-  
+ ``` 
 ### **Passo 3: Back-End**
 ```Ubuntu(WSL)
   docker-compose down
   docker-compose up -d --build
-
+```
 
 ### **Passo 4: Back-End**
 ```Ubuntu(WSL)
