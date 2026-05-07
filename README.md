@@ -64,7 +64,8 @@ Dentro da pasta `Back-End`, execute:
 docker-compose up -d
 ```
 
-### passo 2: Back_-End
+### **passo 2: Banco de Dados**
+Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml:
 ```
 version: '3.8'
 services:
@@ -83,19 +84,26 @@ services:
 volumes:
   db_data:
  ``` 
-### **Passo 3: Back-End **
+### **Passo 3: Banco de Dados**
 Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
+Dentro da pasta `Back-End` execute:
 ```Ubuntu(WSL)
   docker-compose down
   docker-compose up -d --build
 ```
 
-### **Passo 4: Back-End**
+### **Passo 4: Banco de Dados**
+Dentro da pasta `Back-End` execute:
 ```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
-### **Passo 5: Front-End**
+### **Passo 5: Banco de Dados**
+Dentro da pasta `Banc-End` observação:
+```Ubuntu(WSL)
+Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL).
+```
+### **Passo 6: Front-End**
 ```bash
 npm install
 npm run dev
