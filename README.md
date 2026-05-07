@@ -17,67 +17,76 @@ Este projeto foi desenvolvido como uma solução para o desafio técnico de subs
 
 ---
 
-## 🛠️ 2. Arquitetura e Decisões Técnicas
+## 🛠 2. Arquitetura e Decisões Técnicas
 
-Para garantir uma aplicação escalável, de alta performance e fácil de manter, optei por uma arquitetura moderna dividindo as responsabilidades de forma clara:
+Para garantir uma aplicação escalável e de alta performance, optei por uma arquitetura Full-Stack moderna:
 
-### **Front-End: Next.js (React) & Tailwind CSS**
-* **Next.js:** Estrutura robusta de roteamento e renderização rápida.
-* **Painel Visual:** Implementação de gráficos de linha interativos para exibir de forma intuitiva a evolução histórica dos preços dos combustíveis cadastrados.
-* **Tailwind CSS:** Estilização responsiva, limpa e padronizada.
+### **🚀 Back-End: Go (Fiber)**
+*   **Performance:** Escolhido pela altíssima eficiência e baixo consumo de recursos.
+*   **GORM (ORM):** Utilizado para mapeamento relacional e segurança em transações SQL.
+*   **Relacionamentos Inteligentes:** Implementação de `Preload` para entregar objetos complexos ao Front-end (ex: vincular nomes de produtos aos registros de preços).
+*   **Lógica de Atualização (PUT):** Implementação de Handlers específicos para correção de dados, garantindo a integridade dos registros históricos.
 
-### **Back-End: Go (Golang)**
-* **Go:** Escolhido por sua altíssima performance, baixo consumo de recursos e tipagem estática que previne erros em tempo de execução.
-* **REST API:** Construção de endpoints focados para receber os cadastros e retornar o histórico de preços filtrado por produto/fornecedor.
+### **💻 Front-End: Next.js 14 (App Router)**
+*   **Route Groups `(dashboard)`:** Organização avançada de rotas para compartilhamento de layouts e separação lógica de módulos.
+*   **Gerenciamento de Estado e Cache:** Uso estratégico de `cache: 'no-store'` para garantir sincronização em tempo real entre as edições no banco e os gráficos.
+*   **Visualização de Dados:** Integração com **Recharts** para transformar dados brutos em gráficos de linha interativos.
 
-### **Banco de Dados: PostgreSQL & Docker**
-* **Docker & Docker Compose:** Todo o ambiente do banco de dados foi conteinerizado para garantir que o projeto rode com exatidão em qualquer máquina, sem a necessidade de instalar o PostgreSQL localmente no sistema operacional.
-* **PostgreSQL:** Banco de dados relacional robusto e ideal para manter a integridade dos dados históricos dos combustíveis e fornecedores.
-
----
-
-## 📁 3. Estrutura do Projeto
-
-```text
-├── Back-End
-│   ├── cmd/main.go               # Ponto de entrada da aplicação Go
-│   ├── Controller/               # Lógica de controle e rotas da API
-│   ├── Model/                    # Estruturas de dados (Produtos, Registros)
-│   ├── dataBase/db.go            # Conexão com o PostgreSQL
-│   └── docker-compose.yml        # Configuração do banco no Docker
-├── Front-End
-│   └── painel-de-combustivel/    # Aplicação Next.js/React do Painel Visual
-└── README.md
----
+### **🗄️ Infraestrutura: PostgreSQL & Docker**
+*   **Conteinerização:** Setup do banco de dados via Docker Compose para garantir que o ambiente seja idêntico em qualquer máquina (Zero Configuration local).
+*   **Persistência de Dados:** Configuração de volumes para segurança das informações históricas.
 
 ---
 
-## 📌 4. Pré-requisitos para Execução
+## 📁 3. Estrutura do Repositório
 
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-
-* **Git** → [Download](https://git-scm.com/)
-* **Go** `(v1.20 ou superior)` → [Download](https://go.dev/)
-* **Node.js** `(v18 ou superior)` → [Download](https://nodejs.org/)
-* **Docker & Docker Compose** → [Download](https://www.docker.com/)
-
----
-
-## 🚀 5. Como Executar o Projeto
-
-Siga os passos abaixo no seu terminal para configurar e rodar a aplicação localmente:
-
-### **Passo 1: Clonar o Repositório**
 ```bash
-# Clone o projeto
-git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+├── Back-End
+│   ├── cmd/main.go              # Ponto de entrada e definição de rotas
+│   ├── Controller/              # Handlers (Lógica de CRUD e Preload)
+│   ├── Model/                   # Estruturas de dados (GORM)
+│   ├── dataBase/                # Configuração de conexão PostgreSQL
+│   └── docker-compose.yml       # Orquestração do banco de dados
+├── Front-End
+│   └── painel-de-combustivel
+│       ├── app/(dashboard)      # Layouts e páginas (Dashboard e Lançamentos)
+│       └── components/          # Componentes de UI responsivos
+└── README.md
+```
 
-# Acesse a pasta raiz do projeto
-cd seu-repositorio
+---
 
-🌟 6. Diferenciais Implementados
-🐳 Dockerização Total do Banco: Facilidade no setup do projeto (Zero Configuration local para o banco).
+## 🚀 4. Como Executar o Projeto
 
-💾 Camada de Persistência Isolada: Utilização de volumes Docker para garantir que os seus dados não sejam perdidos ao desligar ou reiniciar o computador.
+### **Passo 1: Banco de Dados**
+Dentro da pasta `Back-End`, execute:
+```bash
+docker-compose up -d
+```
 
-📈 Inteligência de Negócios: Transformação de dados brutos do PostgreSQL em inteligência visual por meio de gráficos dinâmicos de fácil leitura.
+### **Passo 2: Back-End**
+```bash
+go run cmd/main.go
+```
+
+### **Passo 3: Front-End**
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## 🌟 5. Diferenciais Implementados
+
+*   ✅ **CRUD Híbrido:** Formulário inteligente que alterna entre Criação e Edição (POST/PUT).
+*   ✅ **Preload de Associações:** O backend entrega o nome real do combustível, eliminando processamento desnecessário no cliente.
+*   ✅ **UX Reativa:** Feedback visual de sucesso/erro e scroll automático para correções.
+*   ✅ **Dashboard Real-Time:** Atualização instantânea dos gráficos ao salvar novas informações.
+
+---
+
+### 6. 🔒 Segurança (Bônus)
+*   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
+
+
