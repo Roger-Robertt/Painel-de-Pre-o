@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Produto } from '@/types';
-
-
 export default function CadastroPreco() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtoId, setProdutoId] = useState('');

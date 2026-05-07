@@ -65,6 +65,7 @@ export default function CadastroFornecedor() {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
         >
 
             {status.message && (
@@ -76,7 +77,7 @@ export default function CadastroFornecedor() {
             <div className="p-8 min-h-screen flex flex-col items-center justify-center">
                 <div className="bg-zinc-900 p-8 rounded">
                     <h1 className="text-4xl font-extrabold mb-6">Cadastro de Fornecedor</h1>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 min-w-md">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-1 gap-4 max-w-md">
                         <input
                             className="p-2 bg-zinc-800 border border-zinc-700 rounded"
                             placeholder="Razão Social ou Nome Fantasia (Ex: Auto Posto Shell)"

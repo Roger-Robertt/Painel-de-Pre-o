@@ -108,7 +108,7 @@ export default function Dashboard() {
 
                   <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                   <XAxis dataKey="data" stroke="#71717a" />
-                  <YAxis stroke="#71717a" domain={[0, 10]} />
+                  <YAxis stroke="#71717a" allowDataOverflow={false} />
                   <Tooltip
                     contentStyle={{ background: "#18181b", borderColor: "#27272a", borderRadius: "8px" }}
                     labelStyle={{ color: "#a1a1aa" }}
@@ -120,6 +120,9 @@ export default function Dashboard() {
                     strokeWidth={3}
                     dot={{ r: 6 }}
                     activeDot={{ r: 8 }}
+                    isAnimationActive={true}
+                    animationDuration={1500}
+                    animationEasing="ease-in-out"
                   />
                 </LineChart>
 
