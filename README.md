@@ -32,6 +32,18 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 *   **Gerenciamento de Estado e Cache:** Uso estratégico de `cache: 'no-store'` para garantir sincronização em tempo real entre as edições no banco e os gráficos.
 *   **Visualização de Dados:** Integração com **Recharts** para transformar dados brutos em gráficos de linha interativos.
 
+### 📐 Layout e Responsividade (Tailwind CSS Grid)
+
+A estrutura de interface foi construída utilizando **CSS Grid** (via Tailwind CSS), garantindo um layout robusto e adaptável:
+
+*   **Organização Multidimensional:** Utilizei Grid para alinhar campos de formulário de diferentes larguras (como Razão Social ocupando 2/3 da linha e CNPJ ocupando 1/3) de forma precisa e semântica.
+  
+*   **Responsividade Eficiente:** Implementação de um sistema *mobile-first*, onde o layout alterna automaticamente de uma única coluna (mobile) para múltiplas colunas em telas maiores, otimizando a experiência do usuário.
+  
+*   **Espaçamento Consistente:** Através da propriedade `gap`, garanti um distanciamento uniforme entre todos os elementos do dashboard e formulários, evitando poluição visual e melhorando a usabilidade.
+  
+---
+
 ### **🗄️ Infraestrutura: PostgreSQL & Docker**
 *   **Conteinerização:** Setup do banco de dados via Docker Compose para garantir que o ambiente seja idêntico em qualquer máquina (Zero Configuration local).
 *   **Persistência de Dados:** Configuração de volumes para segurança das informações históricas.
