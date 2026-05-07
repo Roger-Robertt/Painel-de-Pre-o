@@ -59,15 +59,15 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 ## 🚀 4. Como Executar o Projeto
 
 ### **Passo 1: Banco de Dados**
-Dentro da pasta `Back-End`, execute: no 
-**Go(Fiber)**
+Dentro da pasta `Back-End`, execute no 
+**Go(Fiber)**:
 ```Ubuntu(WSL)
 docker-compose up -d
 ```
 
 ### **passo 2: Banco de Dados**
-Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml: no 
-**Go(Fiber)**
+Dentro da pasta `Back-End` verifica o arquivo Docker-compose.yml no 
+**Go(Fiber)**:
 ```
 version: '3.8'
 services:
@@ -88,23 +88,23 @@ volumes:
  ``` 
 ### **Passo 3: Banco de Dados**
 Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
-Dentro da pasta `Back-End` execute: no 
-**Go(Fiber)**
+Dentro da pasta `Back-End` execute no 
+**Go(Fiber)**:
 ```Ubuntu(WSL)
   docker-compose down
   docker-compose up -d --build
 ```
 
 ### **Passo 4: Banco de Dados**
-Dentro da pasta `Back-End` execute: no
-**Go(Fiber)**
+Dentro da pasta `Back-End` execute no
+**Go(Fiber)**:
 ```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
 ### **Passo 5: Banco de Dados**
-Dentro da pasta `Banc-End` observação: no 
-**Go(Fiber)**
+Dentro da pasta `Banc-End` observação no 
+**Go(Fiber)**:
 ```Ubuntu(WSL)
 Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL).
 ```
