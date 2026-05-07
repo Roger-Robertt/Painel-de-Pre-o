@@ -60,16 +60,41 @@ Para garantir uma aplicação escalável e de alta performance, optei por uma ar
 
 ### **Passo 1: Banco de Dados**
 Dentro da pasta `Back-End`, execute:
-```bash
+```Ubuntu(WSL)
 docker-compose up -d
 ```
 
-### **Passo 2: Back-End**
-```bash
+### passo 2: Back_-End
+
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: usuario_exemplo
+      POSTGRES_PASSWORD: senha_secreta
+      POSTGRES_DB: meu_banco
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+  
+### **Passo 3: Back-End**
+```Ubuntu(WSL)
+  docker-compose down
+  docker-compose up -d --build
+
+
+### **Passo 4: Back-End**
+```Ubuntu(WSL)
 go run cmd/main.go
 ```
 
-### **Passo 3: Front-End**
+### **Passo 5: Front-End**
 ```bash
 npm install
 npm run dev
