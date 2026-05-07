@@ -111,9 +111,9 @@ Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(W
 ### **Passo 6: Back-End**
 **O CORS (Cross-Origin Resource Sharing) é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc.) não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes (ex: Front na 3000 e Back na 8080).**
 
-📦 Como importar no terminal **PowerShell** do
+📦 Como importar no arquivo **main.go** do
 **Go(Fiber)**
-```PowerShell
+```Ubuntu(WSL)
 "github.com/gofiber/fiber/v3/middleware/cors"
 ```
 ### **Passo 7: Front-End**
