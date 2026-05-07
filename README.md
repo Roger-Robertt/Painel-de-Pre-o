@@ -83,7 +83,8 @@ services:
 volumes:
   db_data:
  ``` 
-### **Passo 3: Back-End**
+### **Passo 3: Back-End **
+Se você alterou o docker-compose.yml, reinicie o contêiner para aplicar as novas configurações:
 ```Ubuntu(WSL)
   docker-compose down
   docker-compose up -d --build
