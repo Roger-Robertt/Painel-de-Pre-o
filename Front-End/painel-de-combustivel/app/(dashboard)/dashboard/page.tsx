@@ -50,10 +50,16 @@ export default function Dashboard() {
   const dadosGrafico = Array.isArray(registros)
     ? registros
       .filter((reg) => reg && reg.produto_id === Number(produtoSelecionado))
-      .map((reg) => ({
-        data: reg.data ? reg.data.split('-').reverse().join('/') : "",
-        preco: Number(reg.preco) || 0,
-      }))
+      .map((reg) => {
+        const dataObjeto = reg.data ? new Date(reg.data) : null;
+
+        return {
+          data: dataObjeto && !isNaN(dataObjeto.getTime())
+            ? dataObjeto.toLocaleDateString('pt-BR', { timeZone: 'UTC' })
+            : "Data Inválida",
+          preco: Number(reg.preco) || 0,
+        };
+      })
       .sort((a, b) => {
         const dateA = new Date(a.data.split('/').reverse().join('-')).getTime();
         const dateB = new Date(b.data.split('/').reverse().join('-')).getTime();

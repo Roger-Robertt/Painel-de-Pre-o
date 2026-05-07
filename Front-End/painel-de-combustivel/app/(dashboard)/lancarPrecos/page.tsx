@@ -44,9 +44,9 @@ export default function CadastroPreco() {
 
         const novoRegistro = {
             fornecedor_nome: fornecedorName,
-            preco: parseFloat(preco) || 0,
+            preco: parseFloat(preco.toString().replace(",", ".")) || 0,
             produto_id: parseInt(produtoId) || 0,
-            data: data ? data : new Date().toLocaleDateString('en-CA')
+            data: data,
         };
 
         console.log("Enviando para o Go:", novoRegistro);
@@ -88,6 +88,14 @@ export default function CadastroPreco() {
         setPreco(registro.preco.toString());
         setData(registro.data);
         setProdutoId(registro.produto_id.toString());
+
+        if (registro.data) {
+            const dataParaInput = new Date(registro.data).toISOString().split('T')[0];
+            setData(dataParaInput);
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
     };
 
     return (
@@ -187,7 +195,11 @@ export default function CadastroPreco() {
 
                             <div>
                                 <p className="font-bold">{reg.fornecedor_nome}</p>
-                                <p className="text-sm text-zinc-500">R$ {reg.preco} - {reg.data}</p>
+                                <p className="text-sm text-zinc-500">
+                                    R$ {Number(reg.preco).toFixed(2)} - {
+                                        reg.data ? new Date(reg.data).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) : ""
+                                    }
+                                </p>
                             </div>
 
                             <button
