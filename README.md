@@ -8,6 +8,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+<img width="805" height="122" alt="image" src="https://github.com/user-attachments/assets/df5d992b-8da9-4380-af4f-7fd77be618a3" />
 
 ---
 
@@ -86,7 +87,9 @@ npm run dev
 
 ---
 
-### 6. 🔒 Segurança (Bônus)
+🤖 6. IA como Assistente de Produtividade: Utilizei Inteligência Artificial para acelerar o desenvolvimento, auxiliar no debug de fuso horário e otimizar a arquitetura do projeto, focando na entrega de uma solução robusta em tempo recorde.
+
+### 7. 🔒 Segurança (Bônus)
 *   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
 
 
