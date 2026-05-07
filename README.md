@@ -109,7 +109,7 @@ Dentro da pasta `Banc-End` observação:
 Tudo q for execultar, atualizar, instalar, sempre executa o terminal do Ubuntu(WSL).
 ```
 ### **Passo 6: Back-End**
-**O CORS Cross-Origin Resource Sharing é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc. não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes ex: Front na 3000 e Back na 8080.**
+**O CORS (Cross-Origin Resource Sharing) é uma segurança dos navegadores. Sem ele configurado no seu backend Go, o seu frontend (React, Vue, etc.) não conseguirá ler as respostas da sua API se elas estiverem em domínios ou portas diferentes (ex: Front na 3000 e Back na 8080).**
 
 📦 Como importar
 **Go(Fiber)**
