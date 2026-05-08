@@ -20,12 +20,13 @@ export default function Dashboard() {
   const [produtoSelecionado, setProdutoSelecionado] = useState<number | "">("");
 
   useEffect(() => {
+    const buscarDados = async () => {
 
-    Promise.all([
-      fetch("http://127.0.0.1:3001/api/v1/produtos", { cache: 'no-store' }).then(res => res.json()).catch(() => []),
-      fetch("http://127.0.0.1:3001/api/v1/registro_precos", { cache: 'no-store' }).then(res => res.json()).catch(() => [])
-    ])
-      .then(([dadosProdutos, dadosRegistros]) => {
+      try {
+        const [dadosProdutos, dadosRegistros] = await Promise.all([
+          fetch("http://127.0.0.1:3001/api/v1/produtos", { cache: 'no-store' }).then(res => res.json()).catch(() => []),
+          fetch("http://127.0.0.1:3001/api/v1/registro_precos", { cache: 'no-store' }).then(res => res.json()).catch(() => [])
+        ])
 
         if (Array.isArray(dadosProdutos)) {
           setProdutos(dadosProdutos);
@@ -39,12 +40,15 @@ export default function Dashboard() {
         } else {
           setRegistros([]);
         }
-      })
-      .catch((err) => {
+
+      } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setProdutos([]);
         setRegistros([]);
-      });
+      }
+    }
+
+    buscarDados();
   }, []);
 
   const dadosGrafico = Array.isArray(registros)

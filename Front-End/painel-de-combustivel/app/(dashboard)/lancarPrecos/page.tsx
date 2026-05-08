@@ -18,25 +18,50 @@ export default function CadastroPreco() {
     });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/api/v1/produtos', { cache: 'no-store' })
-            .then((res) => res.json())
-            .then((data) => setProdutos(data))
-            .catch(() => console.error('Erro ao carregar produtos'));
+        const buscarProduto = async () => {
+            try {
+                const res = await fetch('http://127.0.0.1:3001/api/v1/produtos', { cache: 'no-store' })
+                const data = await res.json()
+                setProdutos(data);
+
+            } catch {
+                console.error('Erro ao carregar produtos')
+            }
+        }
+
+        buscarProduto()
     }, []);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/api/v1/fornecedores', { cache: 'no-store' })
-            .then((res) => res.json())
-            .then((data) => setListarFornecedores(data))
-            .catch(() => console.error('Erro ao carregar fornecedores'));
+        const buscarFornecedores = async () => {
+            try {
+                const res = await fetch('http://127.0.0.1:3001/api/v1/fornecedores', { cache: 'no-store' })
+                const data = await res.json()
+                setListarFornecedores(data);
+
+            } catch {
+                console.error('Erro ao carregar fornecedores')
+            }
+        }
+
+        buscarFornecedores()
     }, []);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' })
-            .then((res) => res.json())
-            .then((data) => setRegistros(data))
-            .catch(() => console.error('Erro ao carregar registros de preços'));
+        const buscarRegistroPrecos = async () => {
+            try {
+                const res = await fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' })
+                const data = await res.json()
+                setRegistros(data);
+
+            } catch {
+                console.error('Erro ao carregar registros de preços')
+            }
+
+            buscarRegistroPrecos()
+        }
     }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
