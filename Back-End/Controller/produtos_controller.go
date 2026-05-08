@@ -22,10 +22,6 @@ func (pc *ProdutoController) GetAllProdutos(ctx fiber.Ctx) error {
 	var produtos []model.Produto
 
 	result := pc.DB.Find(&produtos)
-	
-	if err := pc.DB.Find(&produtos).Error; err != nil {
-        return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao buscar produtos"})
-    }
 
 	if result.Error != nil {
 		return ctx.Status(500).JSON(fiber.Map{
