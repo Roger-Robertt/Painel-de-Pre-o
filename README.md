@@ -50,7 +50,20 @@ A estrutura de interface foi construída utilizando **CSS Grid** (via Tailwind C
 
 ---
 
-## 📁 3. Estrutura do Repositório
+## 3. 🤖 Inteligencia Artificial 
+
+Neste projeto, a Inteligência Artificial foi integrada ao fluxo de trabalho como uma ferramenta de produtividade e refinamento técnico, alinhada com as tendências de desenvolvimento de 2026.
+
+🛠️ Onde a IA foi aplicada:
+Eficiência em Boilerplate: Utilizada para acelerar a criação de estruturas repetitivas no Go e interfaces no Next.js, permitindo maior foco na lógica de negócios e na regra do CNPJ.
+
+Refatoração e Clean Code: Auxiliou na revisão de sintaxe e na aplicação de padrões de código limpo tanto em TypeScript quanto em Golang.
+
+Resolução de Conflitos no Docker: Utilizada como suporte para depurar configurações de rede entre os containers do PostgreSQL e das aplicações.
+
+Otimização de Documentação: Apoio na estruturação deste documento para garantir clareza nas instruções de instalação e execução.
+
+## 📁 4. Estrutura do Repositório
 
 ```bash
 ├── Back-End
@@ -68,8 +81,8 @@ A estrutura de interface foi construída utilizando **CSS Grid** (via Tailwind C
 
 ---
 
-## 🚀 4. Como Executar o Projeto
-
+## 🚀 5. Como Executar o Projeto
+-------------------------------------------------------------------------------------------------------------------
 ### **Passo 1: Banco de Dados**
 Dentro da pasta `Back-End`, execute no terminal **Ubuntu(WSL)** do 
 **Go(Fiber)**:
@@ -154,9 +167,9 @@ npm install framer-motion
 npm install recharts
 ```
 
----
+---------------------------------------------------------------------------------------------------------------------
 
-## 🌟 10. Diferenciais Implementados
+## 🌟 6. Diferenciais Implementados
 
 *   ✅ **CRUD Híbrido:** Formulário inteligente que alterna entre Criação e Edição (POST/PUT).
 *   ✅ **Preload de Associações:** O backend entrega o nome real do combustível, eliminando processamento desnecessário no cliente.
@@ -165,11 +178,11 @@ npm install recharts
 
 ---
 
-## 🌟 11. Sobre pegar com o mesmo fornecedor
+## 🌟 7. Sobre pegar com o mesmo fornecedor
 
 *   ✅ Decidi permitir múltiplos registros para garantir a rastreabilidade total das variações de mercado intra-dia (mudanças de preço na mesma data). Para manter a integridade e flexibilidade,eu ja mencionei no primeiro tópico la em cima que implementei uma lógica de Update (PUT): caso o usuário precise corrigir um lançamento específico em vez de criar um novo, o sistema permite a edição direta. No front-end, os dados são tratados para exibir o último valor registrado, garantindo que o gráfico reflita sempre a cotação mais atualizada.
   
-### 12. 🔒 Segurança (Bônus)
+### 8. 🔒 Segurança (Bônus)
 *   ✅ **Sistema de Autenticação:** Embora não fosse um requisito obrigatório, implementei um fluxo de login para demonstrar conhecimentos em proteção de rotas e gestão de identidade de usuários.
 
 
