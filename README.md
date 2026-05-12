@@ -61,8 +61,6 @@ Refatoração e Clean Code: Auxiliou na revisão de sintaxe e na aplicação de 
 
 Resolução de Conflitos no Docker: Utilizada como suporte para depurar configurações de rede entre os containers do PostgreSQL e das aplicações.
 
-Otimização de Documentação: Apoio na estruturação deste documento para garantir clareza nas instruções de instalação e execução.
-
 ## 📁 4. Estrutura do Repositório
 
 ```bash
