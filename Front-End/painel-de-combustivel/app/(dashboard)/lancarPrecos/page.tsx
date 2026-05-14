@@ -3,63 +3,46 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Produto } from '@/types';
+
 export default function CadastroPreco() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [produtoId, setProdutoId] = useState('');
     const [fornecedorName, setFornecedorName] = useState('');
-    const [listarFornecedores, setListarFornecedores] = useState<{ id: number; nome: string }[]>([]);
+    const [listarFornecedores, setListarFornecedores] = useState<{ id: number; nome: string; cnpj?: string }[]>([]);
     const [preco, setPreco] = useState('');
     const [data, setData] = useState('');
     const [registros, setRegistros] = useState<{ id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string, produto?: { id: number, nome: string } }[]>([]);
     const [editandoId, setEditandoId] = useState<string | null>(null);
-    const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({
-        type: '',
-        message: '',
-    });
+    const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({ type: '', message: '' });
 
     useEffect(() => {
         const buscarProduto = async () => {
             try {
-                const res = await fetch('http://127.0.0.1:3001/api/v1/produtos', { cache: 'no-store' })
-                const data = await res.json()
-                setProdutos(data);
-
-            } catch {
-                console.error('Erro ao carregar produtos')
-            }
-        }
-
-        buscarProduto()
+                const res = await fetch('http://127.0.0.1:3001/api/v1/produtos', { cache: 'no-store' });
+                setProdutos(await res.json());
+            } catch { console.error('Erro ao carregar produtos'); }
+        };
+        buscarProduto();
     }, []);
 
     useEffect(() => {
         const buscarFornecedores = async () => {
             try {
-                const res = await fetch('http://127.0.0.1:3001/api/v1/fornecedores', { cache: 'no-store' })
-                const data = await res.json()
-                setListarFornecedores(data);
-
-            } catch {
-                console.error('Erro ao carregar fornecedores')
-            }
-        }
-
-        buscarFornecedores()
+                const res = await fetch('http://127.0.0.1:3001/api/v1/fornecedores', { cache: 'no-store' });
+                setListarFornecedores(await res.json());
+            } catch { console.error('Erro ao carregar fornecedores'); }
+        };
+        buscarFornecedores();
     }, []);
 
     useEffect(() => {
         const buscarRegistroPrecos = async () => {
             try {
-                const res = await fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' })
-                const data = await res.json()
-                setRegistros(data);
-
-            } catch {
-                console.error('Erro ao carregar registros de preços')
-            }
-
-            buscarRegistroPrecos()
-        }
+                const res = await fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' });
+                setRegistros(await res.json());
+            } catch { console.error('Erro ao carregar registros de preços'); }
+        };
+        buscarRegistroPrecos();
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -72,69 +55,58 @@ export default function CadastroPreco() {
             data: data,
         };
 
-        console.log("Enviando para o Go:", novoRegistro);
-
         const url = editandoId
             ? `http://127.0.0.1:3001/api/v1/precos/${editandoId}`
             : 'http://127.0.0.1:3001/api/v1/registro_precos';
 
-        const method = editandoId ? 'PUT' : 'POST';
-
         try {
             const response = await fetch(url, {
-                method: method,
+                method: editandoId ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(novoRegistro),
             });
 
             if (response.ok) {
-                setStatus({
-                    type: 'success',
-                    message: editandoId ? 'Preço atualizado com sucesso!' : 'Preço cadastrado com sucesso!'
-                });
-
+                setStatus({ type: 'success', message: editandoId ? 'Preço atualizado!' : 'Preço cadastrado!' });
                 setEditandoId(null);
-                setFornecedorName('');
-                setPreco('');
-                setData('');
-                setProdutoId('');
+                setFornecedorName(''); setPreco(''); setData(''); setProdutoId('');
+
+                const res = await fetch('http://127.0.0.1:3001/api/v1/registro_precos', { cache: 'no-store' });
+                setRegistros(await res.json());
+                setTimeout(() => setStatus({ type: '', message: '' }), 3000);
             } else {
                 setStatus({ type: 'error', message: 'Erro ao processar a requisição.' });
             }
-        } catch (error) {
+        } catch {
             setStatus({ type: 'error', message: 'Erro de conexão com o servidor.' });
         }
     };
+
     const iniciarEdicao = (registro: { id: number; fornecedor_nome: string; preco: number; produto_id: number; data: string }) => {
         setEditandoId(registro.id.toString());
         setFornecedorName(registro.fornecedor_nome);
         setPreco(registro.preco.toString());
-        setData(registro.data);
         setProdutoId(registro.produto_id.toString());
-
         if (registro.data) {
-            const dataParaInput = new Date(registro.data).toISOString().split('T')[0];
-            setData(dataParaInput);
+            setData(new Date(registro.data).toISOString().split('T')[0]);
         }
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
     };
 
     const formatarMoeda = (valor: string) => {
-
         const apenasNumeros = valor.replace(/\D/g, '');
-
         const valorFormatado = Number(apenasNumeros) / 100;
-
-        return valorFormatado.toLocaleString('pt-BR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
+        return valorFormatado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
-    return (
+    const registrosAgrupados = registros.reduce((acc: Record<string, typeof registros>, reg) => {
+        const chave = reg.fornecedor_nome.trim();
+        if (!acc[chave]) acc[chave] = [];
+        acc[chave].push(reg);
+        return acc;
+    }, {});
 
+    return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -151,69 +123,33 @@ export default function CadastroPreco() {
                 )}
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Selecione o Produto</label>
-                        <select
-                            value={produtoId}
-                            onChange={(e) => setProdutoId(e.target.value)}
-                            className="p-2.5 rounded bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500"
-                            required
-                        >
+                        <select value={produtoId} onChange={(e) => setProdutoId(e.target.value)} className="p-2.5 rounded bg-zinc-800 border border-zinc-700 text-white outline-none focus:border-blue-500" required>
                             <option value="">Escolha um combustível</option>
-                            {produtos.map((p) => (
-                                <option key={p.id} value={p.id}>
-                                    {p.nome}
-                                </option>
-                            ))}
+                            {produtos.map((p) => (<option key={p.id} value={p.id}>{p.nome}</option>))}
                         </select>
                     </div>
 
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Fornecedor / Posto</label>
-                        <select
-                            value={fornecedorName}
-                            onChange={(e) => setFornecedorName(e.target.value)}
-                            className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500"
-                            required
-                        >
+                        <select value={fornecedorName} onChange={(e) => setFornecedorName(e.target.value)} className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500" required>
                             <option value="">Escolha um fornecedor</option>
-                            {listarFornecedores.map((f) => (
-                                <option key={f.id} value={f.nome}>
-                                    {f.nome}
-                                </option>
-                            ))}
+                            {listarFornecedores.map((f) => (<option key={f.id} value={f.nome}>{f.nome}</option>))}
                         </select>
                     </div>
 
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Preço por Litro (R$)</label>
-                        <input
-                            type="text"
-                            step="0.01"
-                            value={preco}
-                            onChange={(e) => setPreco(formatarMoeda(e.target.value))}
-                            className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500"
-                            placeholder="Ex: 5.49"
-                            required
-                        />
+                        <input type="text" value={preco} onChange={(e) => setPreco(formatarMoeda(e.target.value))} className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500" placeholder="Ex: 5.49" required />
                     </div>
 
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-zinc-400">Data do Registro</label>
-                        <input
-                            type="date"
-                            value={data}
-                            onChange={(e) => setData(e.target.value)}
-                            className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500"
-                            required
-                        />
+                        <input type="date" value={data} onChange={(e) => setData(e.target.value)} className="p-2.5 rounded bg-zinc-800 border border-zinc-700 outline-none focus:border-blue-500" required />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="mt-4 p-3 bg-blue-600 hover:bg-blue-700 rounded font-bold transition-colors duration-200"
-                    >
+                    <button type="submit" className="mt-4 p-3 bg-blue-600 hover:bg-blue-700 rounded font-bold transition-colors duration-200">
                         Salvar Preço
                     </button>
                 </form>
@@ -221,30 +157,38 @@ export default function CadastroPreco() {
 
             <div className="mt-10 max-w-lg mx-auto">
                 <h2 className="text-xl font-bold mb-4 text-zinc-400">Histórico de Lançamentos</h2>
-                <div className="space-y-2">
-                    {registros.map((reg) => (
-                        <div key={reg.id} className="p-4 bg-zinc-800 rounded border border-zinc-700 flex justify-between items-center">
-                            <span className="text-xs font-bold text-blue-500 uppercase">
-                                {reg.produto?.nome || "Combustível"}
-                            </span>
+                <div className="space-y-4">
+                    {Object.entries(registrosAgrupados).map(([fornecedor, regs]) => {
+                        const dadosDoFornecedor = listarFornecedores.find(f => f.nome.trim() === fornecedor);
+                        return (
+                            <div key={fornecedor} className="bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden">
+                                <div className="bg-zinc-800 px-4 py-3 border-b border-zinc-700">
+                                    <p className="font-bold text-white">{fornecedor}</p>
+                                    <p className="text-xs text-zinc-500 font-mono">
+                                        CNPJ: {dadosDoFornecedor?.cnpj || "Não cadastrado"}
+                                    </p>
+                                </div>
 
-                            <div>
-                                <p className="font-bold">{reg.fornecedor_nome}</p>
-                                <p className="text-sm text-zinc-500">
-                                    R$ {Number(reg.preco).toFixed(2)} - {
-                                        reg.data ? new Date(reg.data).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) : ""
-                                    }
-                                </p>
+                                <div className="divide-y divide-zinc-800">
+                                    {regs.map((reg) => (
+                                        <div key={reg.id} className="px-4 py-3 flex justify-between items-center hover:bg-zinc-800/40 transition">
+                                            <div>
+                                                <span className="text-xs font-bold text-blue-500 uppercase">
+                                                    {reg.produto?.nome || "Combustível"}
+                                                </span>
+                                                <p className="text-sm text-zinc-300 mt-0.5">
+                                                    R$ {Number(reg.preco).toFixed(2)} — {reg.data ? new Date(reg.data).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) : ""}
+                                                </p>
+                                            </div>
+                                            <button onClick={() => iniciarEdicao(reg)} className="text-blue-500 hover:underline text-sm ml-4">
+                                                Corrigir
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-
-                            <button
-                                onClick={() => iniciarEdicao(reg)}
-                                className="text-blue-500 hover:underline text-sm"
-                            >
-                                Corrigir
-                            </button>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </motion.div>

@@ -53,3 +53,4 @@ func (pc *PrecoController) UpdatePreco(ctx fiber.Ctx) error {
 
 	return ctx.Status(200).JSON(registro)
 }
+

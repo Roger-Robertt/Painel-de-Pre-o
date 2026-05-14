@@ -31,6 +31,18 @@ func (fc *FornecedorController) GetAllFornecedores(ctx fiber.Ctx) error {
 
 	return ctx.JSON(fornecedores)
 }
+
+func (fc *FornecedorController) GetFornecedorByID(ctx fiber.Ctx) error {
+    id := ctx.Params("id")
+
+    var fornecedor model.Fornecedor
+    if err := fc.DB.First(&fornecedor, id).Error; err != nil {
+        return ctx.Status(404).JSON(fiber.Map{"error": "Fornecedor não encontrado"})
+    }
+
+    return ctx.JSON(fornecedor)
+}
+
 func (fc *FornecedorController) CreateFornecedor(ctx fiber.Ctx) error {
 	var fornecedor model.Fornecedor
 
@@ -39,6 +51,13 @@ func (fc *FornecedorController) CreateFornecedor(ctx fiber.Ctx) error {
 			"error": "Erro ao parsear o corpo da requisição",
 		})
 	}
+
+	 var existing model.Fornecedor
+	 
+    if err := fc.DB.Where("cnpj = ?", fornecedor.CNPJ).First(&existing).Error; err == nil {
+        return ctx.Status(409).JSON(fiber.Map{"error": "CNPJ já cadastrado"})
+    
+    }
 
 	result := fc.DB.Create(&fornecedor)
 
@@ -49,4 +68,42 @@ func (fc *FornecedorController) CreateFornecedor(ctx fiber.Ctx) error {
 	}
 
 	return ctx.Status(201).JSON(fornecedor)
+}
+
+func (fc *FornecedorController) UpdateFornecedor(ctx fiber.Ctx) error {
+    id := ctx.Params("id")
+
+    var fornecedor model.Fornecedor
+    if err := fc.DB.First(&fornecedor, id).Error; err != nil {
+        return ctx.Status(404).JSON(fiber.Map{"error": "Fornecedor não encontrado"})
+    }
+
+    var body model.Fornecedor
+    if err := ctx.Bind().Body(&body); err != nil {
+        return ctx.Status(400).JSON(fiber.Map{"error": "Dados inválidos"})
+    }
+
+    fornecedor.Nome = body.Nome
+    fornecedor.CNPJ = body.CNPJ
+
+    if err := fc.DB.Save(&fornecedor).Error; err != nil {
+        return ctx.Status(500).JSON(fiber.Map{"error": "Erro ao atualizar"})
+    }
+
+    return ctx.JSON(fornecedor)
+}
+
+func (fc *FornecedorController) DeleteFornecedor(ctx fiber.Ctx) error {
+    id := ctx.Params("id")
+
+    var fornecedor model.Fornecedor
+    if err := fc.DB.First(&fornecedor, id).Error; err != nil {
+        return ctx.Status(404).JSON(fiber.Map{"error": "Fornecedor não encontrado"})
+    }
+
+    fc.DB.Exec("DELETE FROM registro_precos WHERE fornecedor_nome = ?", fornecedor.Nome)
+
+    fc.DB.Exec("DELETE FROM fornecedores WHERE id = ?", id)
+
+    return ctx.JSON(fiber.Map{"message": "Fornecedor e histórico deletados com sucesso"})
 }

@@ -41,6 +41,7 @@ func main() {
 
 	api.Get("/precos/:id", PrecoController.GetRegistroPrecoByID)
 
+	api.Get("/fornecedores/:id", FornecedorController.GetFornecedorByID)
 
 
 
@@ -57,6 +58,11 @@ func main() {
 	
 
 	api.Put("/precos/:id", PrecoController.UpdatePreco)
+
+	api.Put("/fornecedores/:id", FornecedorController.UpdateFornecedor)
+
+
+	api.Delete("/fornecedores/:id", FornecedorController.DeleteFornecedor)
 
 	log.Fatal(app.Listen(":3001"))
 }
