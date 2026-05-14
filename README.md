@@ -1,5 +1,5 @@
 
-<img width="1347" height="588" alt="Image" src="https://github.com/user-attachments/assets/a5a3b75e-9a23-42e3-b431-c6ff73f45dae" />
+<img width="1348" height="597" alt="Image" src="https://github.com/user-attachments/assets/981bd3a4-f17a-4d24-993f-e6221f39692b" />
 
 # 📊 Painel de Preços de Combustíveis
 
